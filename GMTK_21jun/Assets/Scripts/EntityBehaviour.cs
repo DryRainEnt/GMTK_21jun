@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class EntityBehaviour : MonoBehaviour, IMovable, ICrasher, ICollectable
 {
@@ -11,6 +12,8 @@ public class EntityBehaviour : MonoBehaviour, IMovable, ICrasher, ICollectable
     private Vector3 destination = Vector3.zero;
 
     public Transform GfxTransform => transform.Find("GFX");
+
+    private UnityEvent onCollected = new UnityEvent();
     
     private void Awake()
     {
@@ -143,5 +146,13 @@ public class EntityBehaviour : MonoBehaviour, IMovable, ICrasher, ICollectable
             if (ic.Index < 0)
                 _collector.Collect(ic);
         }
+    }
+
+    public void AddCollectedEventListener(FollowerGenerator generator,Vector2 coord)
+    {
+        UnityAction addedListener = () => generator.CollectedFollowerOn(coord, gameObject);
+
+        onCollected.AddListener(addedListener);
+        onCollected.AddListener(() => onCollected.RemoveListener(addedListener));
     }
 }
