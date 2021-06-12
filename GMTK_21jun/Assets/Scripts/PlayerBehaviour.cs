@@ -29,17 +29,6 @@ public class PlayerBehaviour : MonoBehaviour, IMovable, ICrasher, ICollector
         _veclocity = Vector3.right * Input.GetAxis("Horizontal")
                      + Vector3.up * Input.GetAxis("Vertical");
 
-        var col = Physics2D.OverlapCircleAll(Position, 1f, 1 << 9);
-        for (int i = 0; i < col.Length; i++)
-        {
-            var ic = col[i].GetComponent<ICollectable>();
-            if (ic != null)
-            {
-                if (ic.Index < 0)
-                    Collect(ic);
-            }
-        }
-
         if (Input.GetMouseButtonDown(0))
         {
             throwStack = 1;
@@ -129,10 +118,20 @@ public class PlayerBehaviour : MonoBehaviour, IMovable, ICrasher, ICollector
     {
         get => transform.position; 
         set => 
-            transform.position = value.GetXY();
+            transform.position = value.GetXY(value.y * 0.1f);
     }
 
     public float height;
 
     #endregion
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        var ic = other.transform.GetComponent<ICollectable>();
+        if (ic != null)
+        {
+            if (ic.Index < 0)
+                Collect(ic);
+        }
+    }
 }

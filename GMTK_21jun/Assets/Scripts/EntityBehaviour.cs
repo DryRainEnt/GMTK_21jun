@@ -25,20 +25,6 @@ public class EntityBehaviour : MonoBehaviour, IMovable, ICrasher, ICollectable
 
     private void Update()
     {
-        if (_collector != null)
-        {
-            var col = Physics2D.OverlapCircleAll(Position, 0.5f, 1 << 9);
-            for (int i = 0; i < col.Length; i++)
-            {
-                var ic = col[i].GetComponent<ICollectable>();
-                if (ic != null)
-                {
-                    if (ic.Index < 0)
-                        _collector.Collect(ic);
-                }
-            }
-        }
-        
         if (!isFly)
         {
             if (_collector != null)
@@ -140,10 +126,22 @@ public class EntityBehaviour : MonoBehaviour, IMovable, ICrasher, ICollectable
     {
         get => transform.position; 
         set => 
-            transform.position = value.GetXY();
+            transform.position = value.GetXY(value.y * 0.1f);
     }
 
     public float height;
 
     #endregion
+    
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (_collector == null) return;
+            
+        var ic = other.transform.GetComponent<ICollectable>();
+        if (ic != null)
+        {
+            if (ic.Index < 0)
+                _collector.Collect(ic);
+        }
+    }
 }
