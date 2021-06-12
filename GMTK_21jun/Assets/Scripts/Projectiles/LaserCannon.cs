@@ -55,7 +55,6 @@ public class LaserCannon : MonoBehaviour
                 laserObject.transform.localScale,
                 direction,
                 ppu);
-            Debug.Log(interruptedCount);
             if (interruptedCount > 0)
             {
                 var length = Vector2.Distance(target.position, transform.position);
@@ -96,7 +95,6 @@ public class LaserCannon : MonoBehaviour
                 laserObject.transform.localScale,
                 direction,
                 ppu);
-            Debug.Log(interruptedCount);
             if (interruptedCount > 0)
             {
                 var length = Vector2.Distance(target.position, transform.position);
