@@ -18,7 +18,6 @@ public class BossBehaviour : MonoBehaviour
     public bool isChanneling = false;
 
     private FSMController<BossTransition> _fsmController = null;
-    private FSMState<BossTransition> _nextAction = null;
 
     private void Awake()
     {
@@ -52,28 +51,31 @@ public class BossBehaviour : MonoBehaviour
                 _fsmController.CurrentBehaviour.Act(gameObject, target);
             }
 
-            switch (_nextAction)
-            {
-                case AttackPlayer :
-
-                    break;
-
-            }
-
             yield return waitForFixedUpdate;
         }
     }
 
     public void LaunchLaser(Vector3 diff)
     {
-        _nextAction = _fsmController.CurrentBehaviour;
-        var laserObject = Instantiate(laserPrefab, null);
+        StartCoroutine(CoLaunchLaser(diff));
+    }
+
+    private IEnumerator CoLaunchLaser(Vector3 diff)
+    {
+        isChanneling = true;
+        if (!ObjectPool.instance.TryGet(laserPrefab, out var laserObject))
+        {
+            yield break;
+        }
 
         var direction = diff.normalized;
         // 레이저 길이 절반 * (1 / 100) * (100 / 32) <- PPU
         laserObject.transform.position = transform.position + (direction * laserLength * 0.5f * 0.03125f);
         laserObject.transform.right = direction;
         laserObject.transform.localScale = new Vector3(laserLength, laserWidth, 1f);
+        yield return new WaitForSeconds(3.0f);
+        laserObject.gameObject.SetActive(false);
+        isChanneling = false;
         DoTransition(BossTransition.AttackFinished);
     }
 }
