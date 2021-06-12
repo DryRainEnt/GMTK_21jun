@@ -38,6 +38,13 @@ public class ObjectPool : MonoSingleton<ObjectPool>
         if (ObjectMap.TryGetValue(key, out var objectList))
         {
             var firstInactiveObject = objectList.Find(x => !x.activeSelf);
+            if (firstInactiveObject is null)
+            {
+                var go = Instantiate(key, poolObjectParent);
+                ObjectMap[key].Add(go);
+                firstInactiveObject = go;
+            }
+
             firstInactiveObject.SetActive(true);
             value = firstInactiveObject;
             return true;

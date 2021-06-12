@@ -15,6 +15,8 @@ public class BossBehaviour : MonoBehaviour
 
     public float laserWidth = 20f;
     public float laserLength = 1000f;
+    public float movementSpeed = 2.0f;
+    public float distanceThreshold = 5.0f;
     public bool isChanneling = false;
 
     private FSMController<BossTransition> _fsmController = null;
@@ -26,7 +28,7 @@ public class BossBehaviour : MonoBehaviour
 
     private void InitFSM()
     {
-        var followPlayer = new FollowPlayer(1.0f, 3.0f);
+        var followPlayer = new FollowPlayer(movementSpeed, distanceThreshold);
         var attackPlayer = new AttackPlayer(1.0f);
 
         _fsmController = new FSMController<BossTransition>();
@@ -62,12 +64,13 @@ public class BossBehaviour : MonoBehaviour
 
     private IEnumerator CoLaunchLaser(Vector3 diff)
     {
-        isChanneling = true;
         if (!ObjectPool.instance.TryGet(laserPrefab, out var laserObject))
         {
+            DoTransition(BossTransition.AttackFinished);
             yield break;
         }
 
+        isChanneling = true;
         var direction = diff.normalized;
         // 레이저 길이 절반 * (1 / 100) * (100 / 32) <- PPU
         laserObject.transform.position = transform.position + (direction * laserLength * 0.5f * 0.03125f);
@@ -107,7 +110,9 @@ public class FollowPlayer : FSMState<BossTransition>
 
     public override void Act(GameObject actor, GameObject target)
     {
-        Debug.Log("Aim player");
+        var dt = MovementSpeed * Time.fixedDeltaTime;
+        var direction = target.transform.position - actor.transform.position;
+        actor.transform.position += direction.normalized * dt;
     }
 
     public override string GetStateId()
