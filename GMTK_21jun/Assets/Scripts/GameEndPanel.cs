@@ -24,14 +24,14 @@ public class GameEndPanel : MonoBehaviour
     {
         if (isClearSFX)
         {
-            GetComponent<AudioSource>().PlayOneShot(clearClip);
+            GetComponent<AudioSource>().PlayOneShot(clearClip, 0.8f);
             overClip = null;
             isClearSFX = false;
         }
 
         if (isOverSFX)
         {
-            GetComponent<AudioSource>().PlayOneShot(overClip);
+            GetComponent<AudioSource>().PlayOneShot(overClip, 0.8f);
             clearClip = null;
             isOverSFX = false;
         }
