@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6374342387613564710}
   - component: {fileID: 6374342387613564711}
   m_Layer: 0
-  m_Name: Cannon
+  m_Name: LaserCannon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -95,14 +95,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startDelay: 0
+  disableShortLaser: 0
   shortLaserCooldown: 2
-  shortLaserDelay: 2
-  shortLaserDuration: 1
-  shortlaserWidth: 2
+  shortLaserDelay: 1
+  shortLaserDuration: 1.5
+  shortLaserWidth: 2
+  shortLaserDamage: 5
+  disableLongLaser: 0
   longLaserCooldown: 3
   longLaserDelay: 3
-  longLaserDuration: 3
+  longLaserLifeTime: 3
+  longLaserDuration: 1.5
   longLaserWidth: 4
+  longLaserDamage: 10
   laserLength: 100
   target: {fileID: 0}
   laserPrefab: {fileID: 6916408510802261365, guid: 1c787317eb6543a4094f7e99146e28dd,

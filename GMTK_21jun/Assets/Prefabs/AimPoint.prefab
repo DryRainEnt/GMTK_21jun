@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 5794658861147848749}
   m_Layer: 0
   m_Name: AimPoint
-  m_TagString: Untagged
+  m_TagString: BlockLaser
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -128,6 +128,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c269680ec611664a9d9e14c85182023, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PlayerCache: {fileID: 0}
+  _speed: 10
 --- !u!58 &1920636620694510822
 CircleCollider2D:
   m_ObjectHideFlags: 0
