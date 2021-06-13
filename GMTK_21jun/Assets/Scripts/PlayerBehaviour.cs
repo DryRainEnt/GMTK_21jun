@@ -87,7 +87,7 @@ public class PlayerBehaviour : MonoBehaviour, IMovable, ICrasher, ICollector
 
         if (Input.GetKeyDown(KeyCode.Space) && dashTimer < 0f)
         {
-            _audio.PlayOneShot(DashSound);
+            _audio.PlayOneShot(DashSound, 0.85f);
             ChargeCancel();
             isDashing = true;
             dashTimer = 0f;
