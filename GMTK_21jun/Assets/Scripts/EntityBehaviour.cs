@@ -31,6 +31,7 @@ public class EntityBehaviour : MonoBehaviour, IMovable, ICrasher, ICollectable
     {
         _sr = GetComponentInChildren<SpriteRenderer>();
         _anim = GetComponentInChildren<Animator>();
+        GfxTransform.localPosition = Vector3.zero;
     }
 
     // Start is called before the first frame update
@@ -118,11 +119,18 @@ public class EntityBehaviour : MonoBehaviour, IMovable, ICrasher, ICollectable
         isShoot = false;
     }
 
+    public bool GetHit(int damage)
+    {
+        GetDamage(damage);
+        OnHit();
+
+        return false;
+    }
+
     public void GetDamage(int dmg)
     {
         hp -= dmg;
     }
-    
 
     #endregion
     
@@ -178,6 +186,8 @@ public class EntityBehaviour : MonoBehaviour, IMovable, ICrasher, ICollectable
         {
             _veclocity *= _friction;
         }
+        
+        Position = Position.GetXY(Position.y * 0.1f);
     }
 
     void OnDead()
@@ -185,9 +195,12 @@ public class EntityBehaviour : MonoBehaviour, IMovable, ICrasher, ICollectable
         GameObject fx;
         ObjectPool.instance.TryGet(FXPrefab, out fx);
         fx.transform.position = GfxTransform.position;
+        GfxTransform.localPosition = Vector3.zero;
+        Position = Position.GetXY(0);
         hp = 1;
         isFly = false;
         isShoot = false;
+        _index = -1;
         gameObject.SetActive(false);
     }
     

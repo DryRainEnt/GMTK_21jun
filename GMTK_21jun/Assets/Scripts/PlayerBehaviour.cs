@@ -29,6 +29,8 @@ public class PlayerBehaviour : MonoBehaviour, IMovable, ICrasher, ICollector
     [SerializeField] private float dashDelay = 0.4f;
     [SerializeField] private float repositionDelay = 2f;
 
+    public int HP = 1;
+    
     private void Awake()
     {
         _anim = GetComponentInChildren<Animator>();
@@ -190,6 +192,15 @@ public class PlayerBehaviour : MonoBehaviour, IMovable, ICrasher, ICollector
     {
         Swarm.Remove(target);
         swarm.Collect(target);
+    }
+
+    public bool GetHit(int damage)
+    {
+        HP -= damage;
+        
+        //TODO: 피격시 사망 연출
+        
+        return false;
     }
 
     #region IMovable
