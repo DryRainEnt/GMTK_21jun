@@ -130,6 +130,21 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 7789459628750542157, guid: 8b27b043e755da249b1b140bd47a77b0,
         type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7789459628750542157, guid: 8b27b043e755da249b1b140bd47a77b0,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7789459628750542157, guid: 8b27b043e755da249b1b140bd47a77b0,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7789459628750542157, guid: 8b27b043e755da249b1b140bd47a77b0,
+        type: 3}
       propertyPath: m_SortingOrder
       value: 1
       objectReference: {fileID: 0}
@@ -228,6 +243,31 @@ PrefabInstance:
       propertyPath: missileInterval
       value: 0.1
       objectReference: {fileID: 0}
+    - target: {fileID: 7789459628820139603, guid: 8b27b043e755da249b1b140bd47a77b0,
+        type: 3}
+      propertyPath: phaseTwoColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7789459628820139603, guid: 8b27b043e755da249b1b140bd47a77b0,
+        type: 3}
+      propertyPath: phaseTwoColor.b
+      value: 0.3066038
+      objectReference: {fileID: 0}
+    - target: {fileID: 7789459628820139603, guid: 8b27b043e755da249b1b140bd47a77b0,
+        type: 3}
+      propertyPath: phaseTwoColor.g
+      value: 0.3066038
+      objectReference: {fileID: 0}
+    - target: {fileID: 7789459628820139603, guid: 8b27b043e755da249b1b140bd47a77b0,
+        type: 3}
+      propertyPath: phaseTwoColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7789459628820139603, guid: 8b27b043e755da249b1b140bd47a77b0,
+        type: 3}
+      propertyPath: bossBodyRenderer
+      value: 
+      objectReference: {fileID: 1032371606}
     - target: {fileID: 7789459628820139603, guid: 8b27b043e755da249b1b140bd47a77b0,
         type: 3}
       propertyPath: doublePunchDelay
@@ -1435,6 +1475,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerBehaviour: {fileID: 1550091355}
+--- !u!212 &1032371606 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 7789459628750542157, guid: 8b27b043e755da249b1b140bd47a77b0,
+    type: 3}
+  m_PrefabInstance: {fileID: 95752104}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1190731578
 GameObject:
   m_ObjectHideFlags: 0

@@ -39,6 +39,8 @@ public class BossBehaviour : MonoBehaviour, ICrasher
 
     public SpriteRenderer leftArmRenderer = null;
     public SpriteRenderer rightArmRenderer = null;
+    public SpriteRenderer bossBodyRenderer = null;
+    public Color phaseTwoColor;
 
     private FSMController<BossTransition> _fsmController = null;
     private Animator _animator = null;
@@ -47,6 +49,8 @@ public class BossBehaviour : MonoBehaviour, ICrasher
     [SerializeField] private int HPMax = 50;
     public int HP = 50;
     public Image BossHPGauge;
+
+    private bool isPhaseTwo = false;
 
     public bool IsMissileCooldown { get; private set; } = false;
 
@@ -128,12 +132,13 @@ public class BossBehaviour : MonoBehaviour, ICrasher
         isChanneling = true;
         _animator.SetTrigger("DoublePunchStart");
 
+        var originalColor = leftArmRenderer.color;
         leftArmRenderer.DOColor(Color.red, doublePunchChargeTime);
         rightArmRenderer.DOColor(Color.red, doublePunchChargeTime);
         yield return new WaitForSeconds(doublePunchChargeTime);
         _animator.SetTrigger("DoublePunch");
-        leftArmRenderer.DOColor(Color.white, doublePunchDelay);
-        rightArmRenderer.DOColor(Color.white, doublePunchDelay);
+        leftArmRenderer.DOColor(originalColor, doublePunchDelay);
+        rightArmRenderer.DOColor(originalColor, doublePunchDelay);
         yield return new WaitForSeconds(doublePunchDelay);
         isChanneling = false;
         DoTransition(BossTransition.AttackFinished);
@@ -188,13 +193,28 @@ public class BossBehaviour : MonoBehaviour, ICrasher
         if (BossHPGauge)
             BossHPGauge.fillAmount = HP / (float)HPMax;
 
-        if (HP <= 25)
-            laserParent.SetActive(true);
+        if (!isPhaseTwo && HP <= 49)
+        {
+            StartCoroutine(CoPhase2());
+        }
         
         if (HP <= 0)
             GamePanel.GameCleared();
 
         return true;
+    }
+
+    public IEnumerator CoPhase2()
+    {
+        isPhaseTwo = true;
+        isChanneling = true;
+        _animator.Rebind();
+        bossBodyRenderer.DOColor(phaseTwoColor, 1f);
+        leftArmRenderer.DOColor(phaseTwoColor, 1f);
+        rightArmRenderer.DOColor(phaseTwoColor, 1f);
+        yield return new WaitForSeconds(1f);
+        isChanneling = false;
+        laserParent.SetActive(true);
     }
 }
 
