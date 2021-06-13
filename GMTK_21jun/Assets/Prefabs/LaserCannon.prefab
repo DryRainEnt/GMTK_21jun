@@ -99,14 +99,14 @@ MonoBehaviour:
   shortLaserCooldown: 10
   shortLaserDelay: 1
   shortLaserDuration: 1.5
-  shortLaserWidth: 1
+  shortLaserWidth: 0.7
   shortLaserDamage: 5
   disableLongLaser: 0
   longLaserCooldown: 25
   longLaserDelay: 3
   longLaserLifeTime: 3
   longLaserDuration: 1.5
-  longLaserWidth: 2
+  longLaserWidth: 1
   longLaserDamage: 10
   laserLength: 100
   target: {fileID: 0}

@@ -19,6 +19,9 @@ public class BossBehaviour : MonoBehaviour
     public float distanceThreshold;
     public bool isChanneling = false;
 
+    public float doublePunchChargeTime;
+    public float doublePunchDelay;
+
     public int missileCount;
     public float missileInterval;
     public float missileCooldown;
@@ -29,6 +32,9 @@ public class BossBehaviour : MonoBehaviour
     public float barrageCooldown;
     public float[] barrageAngles;
     public Transform barrageOffset = null;
+
+    public SpriteRenderer leftArmRenderer = null;
+    public SpriteRenderer rightArmRenderer = null;
 
     private FSMController<BossTransition> _fsmController = null;
     private Animator _animator = null;
@@ -111,9 +117,15 @@ public class BossBehaviour : MonoBehaviour
     private IEnumerator CoDoublePunch()
     {
         isChanneling = true;
+        _animator.SetTrigger("DoublePunchStart");
+
+        leftArmRenderer.DOColor(Color.red, doublePunchChargeTime);
+        rightArmRenderer.DOColor(Color.red, doublePunchChargeTime);
+        yield return new WaitForSeconds(doublePunchChargeTime);
         _animator.SetTrigger("DoublePunch");
-        var animationTime = _animator.GetCurrentAnimatorStateInfo(0).length;
-        yield return new WaitForSeconds(animationTime);
+        leftArmRenderer.DOColor(Color.white, doublePunchDelay);
+        rightArmRenderer.DOColor(Color.white, doublePunchDelay);
+        yield return new WaitForSeconds(doublePunchDelay);
         isChanneling = false;
         DoTransition(BossTransition.AttackFinished);
     }

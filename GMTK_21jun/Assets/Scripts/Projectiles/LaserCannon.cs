@@ -93,7 +93,6 @@ public class LaserCannon : MonoBehaviour
 
             collider.enabled = true;
             renderer.color = Color.white;
-            renderer.DOFade(0f, shortLaserDuration);
             laserObject.transform.DOScaleX(0f, shortLaserDuration);
             yield return new WaitForSeconds(shortLaserDuration);
             laserObject.SetActive(false);
@@ -154,7 +153,6 @@ public class LaserCannon : MonoBehaviour
             renderer.color = Color.white;
             yield return new WaitForSeconds(longLaserLifeTime);
 
-            renderer.DOFade(0f, longLaserDuration);
             laserObject.transform.DOScaleX(0f, longLaserDuration);
             yield return new WaitForSeconds(longLaserDuration);
             laserObject.SetActive(false);
