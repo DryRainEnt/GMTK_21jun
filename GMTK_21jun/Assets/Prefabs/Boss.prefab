@@ -234,6 +234,8 @@ MonoBehaviour:
   - 135
   - -135
   barrageOffset: {fileID: 9110338499065789455}
+  HP: 1000
+  BossHPGauge: {fileID: 0}
 --- !u!95 &7789459628820139605
 Animator:
   serializedVersion: 3

@@ -24,11 +24,22 @@ public class Missile : MonoBehaviour
 
         var yTween = projectile.DOMoveY(targetPosition.y, arrivalTime);
         yTween.SetEase(ease);
-        yTween.onComplete = () => gameObject.SetActive(false);
-
+        yTween.onComplete = () => DamageCheck(targetPosition);
+        
         var xTween = projectile.DOMoveX(targetPosition.x, arrivalTime);
         xTween.SetEase(Ease.InQuad);
 
         warningCircleRenderer.DOFade(1f, arrivalTime);
+        
+    }
+
+    void DamageCheck(Vector3 pos)
+    {
+        var hits = Physics2D.OverlapCircleAll(pos, 0.5f);
+        foreach (var hit in hits)
+        {
+            hit.GetComponent<ICrasher>()?.GetHit(3);
+        }
+        gameObject.SetActive(false);
     }
 }
