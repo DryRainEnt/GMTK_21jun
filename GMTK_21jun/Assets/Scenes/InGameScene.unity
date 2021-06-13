@@ -1013,6 +1013,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1852902763898481230, guid: e7956872f18e6c14a9607da553e9cc8e,
+        type: 3}
+      propertyPath: timeRecorder
+      value: 
+      objectReference: {fileID: 1985101318}
     - target: {fileID: 1852902763924007867, guid: e7956872f18e6c14a9607da553e9cc8e,
         type: 3}
       propertyPath: m_IsActive
