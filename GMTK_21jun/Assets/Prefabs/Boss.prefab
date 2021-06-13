@@ -221,7 +221,7 @@ MonoBehaviour:
   movementSpeed: 4
   distanceThreshold: 3
   isChanneling: 0
-  doublePunchChargeTime: 1.5
+  doublePunchChargeTime: 1
   doublePunchDelay: 0
   missileCount: 8
   missileInterval: 0.5
