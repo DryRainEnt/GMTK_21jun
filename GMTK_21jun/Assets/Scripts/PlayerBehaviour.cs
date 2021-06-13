@@ -124,7 +124,7 @@ public class PlayerBehaviour : MonoBehaviour, IMovable, ICrasher, ICollector
             }
             
             innerTimer += dt;
-            if (innerTimer > Mathf.Max(0.1f / (throwStack * 0.1f), 0.2f))
+            if (innerTimer > Mathf.Max(0.1f / (throwStack * 0.2f), 0.1f))
             {
                 innerTimer = 0f;
                 
@@ -144,6 +144,18 @@ public class PlayerBehaviour : MonoBehaviour, IMovable, ICrasher, ICollector
             VirtualCollectorCache = null;
             throwStack = 1;
         }
+
+        var cols = Physics2D.OverlapCircleAll(Position, 1f, LayerMask.NameToLayer("Entity"));
+        foreach (var col in cols)
+        {
+            var ic = col.transform.GetComponent<ICollectable>();
+            if (ic != null)
+            {
+                if (ic.Index < 0)
+                    Collect(ic);
+            }
+        }
+
     }
 
     void ChargeCancel()
@@ -280,13 +292,6 @@ public class PlayerBehaviour : MonoBehaviour, IMovable, ICrasher, ICollector
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        var ic = other.transform.GetComponent<ICollectable>();
-        if (ic != null)
-        {
-            if (ic.Index < 0)
-                Collect(ic);
-        }
-
         if (other.gameObject.layer == LayerMask.NameToLayer("Damage"))
         {
             other.GetComponent<Bullet>()?.Dispose();
