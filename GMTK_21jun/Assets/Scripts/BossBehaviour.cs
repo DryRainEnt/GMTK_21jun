@@ -16,6 +16,8 @@ public class BossBehaviour : MonoBehaviour, ICrasher
     public GameObject barragePrefab = null;
     public GameObject target = null;
 
+    public GameObject laserParent;
+
     public float movementSpeed;
     public float distanceThreshold;
     public bool isChanneling = false;
@@ -185,6 +187,9 @@ public class BossBehaviour : MonoBehaviour, ICrasher
         //TODO: 보스 피격 이펙트
         if (BossHPGauge)
             BossHPGauge.fillAmount = HP / (float)HPMax;
+
+        if (HP <= 25)
+            laserParent.SetActive(true);
         
         if (HP <= 0)
             GamePanel.GameCleared();

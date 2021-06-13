@@ -221,11 +221,13 @@ MonoBehaviour:
   distanceThreshold: 3
   isChanneling: 0
   doublePunchChargeTime: 1.5
+  doublePunchDelay: 0
   missileCount: 8
   missileInterval: 0.5
   missileCooldown: 10
   missileOffset: {fileID: 7789459628450750085}
   barrageTime: 1
+  barrageDelay: 0
   barrageInterval: 0.4
   barrageCooldown: 8
   barrageAngles:
@@ -234,6 +236,10 @@ MonoBehaviour:
   - 135
   - -135
   barrageOffset: {fileID: 9110338499065789455}
+  leftArmRenderer: {fileID: 0}
+  rightArmRenderer: {fileID: 0}
+  GamePanel: {fileID: 0}
+  HPMax: 50
   HP: 50
   BossHPGauge: {fileID: 0}
 --- !u!95 &7789459628820139605
@@ -283,7 +289,7 @@ GameObject:
   - component: {fileID: 7789459629629994823}
   - component: {fileID: 7789459629629994822}
   - component: {fileID: 1583156221}
-  m_Layer: 15
+  m_Layer: 16
   m_Name: LeftArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -412,7 +418,7 @@ GameObject:
   - component: {fileID: 7789459629767959691}
   - component: {fileID: 7789459629767959690}
   - component: {fileID: 1921759402}
-  m_Layer: 15
+  m_Layer: 16
   m_Name: RightArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
