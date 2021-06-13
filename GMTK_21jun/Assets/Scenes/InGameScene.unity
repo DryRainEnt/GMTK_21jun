@@ -128,6 +128,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 7789459628750542157, guid: 8b27b043e755da249b1b140bd47a77b0,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7789459628820139601, guid: 8b27b043e755da249b1b140bd47a77b0,
         type: 3}
       propertyPath: m_Name
@@ -205,6 +210,11 @@ PrefabInstance:
       objectReference: {fileID: 95752106}
     - target: {fileID: 7789459628820139603, guid: 8b27b043e755da249b1b140bd47a77b0,
         type: 3}
+      propertyPath: missileInterval
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7789459628820139603, guid: 8b27b043e755da249b1b140bd47a77b0,
+        type: 3}
       propertyPath: doublePunchDelay
       value: 1
       objectReference: {fileID: 0}
@@ -213,6 +223,16 @@ PrefabInstance:
       propertyPath: rightArmRenderer
       value: 
       objectReference: {fileID: 95752105}
+    - target: {fileID: 7789459629629994823, guid: 8b27b043e755da249b1b140bd47a77b0,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7789459629767959691, guid: 8b27b043e755da249b1b140bd47a77b0,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8b27b043e755da249b1b140bd47a77b0, type: 3}
 --- !u!212 &95752105 stripped
@@ -2005,7 +2025,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 0
-  m_FillAmount: 0.409
+  m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
@@ -2459,6 +2479,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 3352974874943281951, guid: 8d1e3f22f7790c44398f000f7f379ce3,
         type: 3}
+    - target: {fileID: 3730483257194012222, guid: 208655a30fbdce14a8ca4a5b06644425,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 208655a30fbdce14a8ca4a5b06644425, type: 3}
 --- !u!1 &1974990714 stripped
