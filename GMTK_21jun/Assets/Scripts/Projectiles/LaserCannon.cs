@@ -35,10 +35,6 @@ public class LaserCannon : MonoBehaviour
         {
             StartCoroutine(CoLaunchShortLaser());
         }
-        if (!disableLongLaser)
-        {
-            StartCoroutine(CoLaunchLongLaser());
-        }
     }
 
     private IEnumerator CoLaunchShortLaser()
