@@ -93,6 +93,8 @@ public class FollowerGenerator : MonoBehaviour
                 follower.transform.position = new Vector3(Random.Range(0, CellSize.x/2) + rect.x, Random.Range(0, CellSize.y/2) + rect.y);
                 followers.Add(follower);
             }
+
+        followerByCoord.Add(coord, followers);
     }
 
     public void CollectedFollowerOn(Vector2 coord, GameObject follower)
