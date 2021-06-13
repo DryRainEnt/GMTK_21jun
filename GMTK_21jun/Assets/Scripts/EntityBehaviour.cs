@@ -225,6 +225,7 @@ public class EntityBehaviour : MonoBehaviour, IMovable, ICrasher, ICollectable
 
         if (other.gameObject.layer == 16)
         {
+            other.gameObject.GetComponent<Bullet>()?.Dispose();
             GetDamage(1);
             OnHit();
         }
