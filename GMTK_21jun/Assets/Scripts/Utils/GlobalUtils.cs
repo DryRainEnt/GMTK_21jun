@@ -108,4 +108,9 @@ public static class GlobalUtils
     {
         return new Vector3(v.x * co.x, v.y * co.y);
     }
+
+    public static Quaternion Vector3ToRotation(this Vector3 v)
+    {
+        return Quaternion.Euler(0, 0, -Vector3.Angle(Vector3.right, v));
+    }
 }

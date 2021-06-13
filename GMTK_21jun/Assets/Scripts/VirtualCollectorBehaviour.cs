@@ -13,6 +13,8 @@ public class VirtualCollectorBehaviour : MonoBehaviour, IMovable, ICrasher, ICol
     private float innerTimer = 0f;
     private CircleCollider2D col;
 
+    public GameObject FXPrefab;
+    
     public bool isFlip => false;
     public CollectType Type => CollectType.Virtual;
     
@@ -145,14 +147,13 @@ public class VirtualCollectorBehaviour : MonoBehaviour, IMovable, ICrasher, ICol
 
     #endregion
     
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerStay2D(Collider2D other)
     {
         if (other.gameObject.layer >= 15 && isShooting)
         {
             var pos = other.ClosestPoint(Position);
             //TODO: Damage Effect
             other.GetComponent<ICrasher>()?.GetHit(Swarm.Count + 
-                                                   Mathf.FloorToInt(Swarm.Count / 3) + 
                                                    Mathf.FloorToInt(Swarm.Count / 10));
             
             while (Swarm.Count > 0)
@@ -160,6 +161,12 @@ public class VirtualCollectorBehaviour : MonoBehaviour, IMovable, ICrasher, ICol
                 Swarm[0].GetDamage(1);
                 Throw(Swarm[0], Position.ToVector2() + ((Position.ToVector2() - pos) * 4) + GlobalUtils.RandomWholeRange(1f).ToVector2());
             }
+            
+            GameObject fx;
+            ObjectPool.instance.TryGet(FXPrefab, out fx);
+            fx.transform.position = GfxTransform.position;
+            fx.transform.localRotation = Velocity.Vector3ToRotation();
+
             _veclocity = Vector3.zero;
             isShooting = false;
             gameObject.SetActive(false);
@@ -167,6 +174,7 @@ public class VirtualCollectorBehaviour : MonoBehaviour, IMovable, ICrasher, ICol
 
         if (other.gameObject.layer == 16)
         {
+            if (Swarm.Count == 0) return;
             var bullet = other.GetComponent<Bullet>();
             if (bullet)
             {
