@@ -21,6 +21,7 @@ public class BossBehaviour : MonoBehaviour
     public int missileCount = 4;
     public float missileInterval = 0.2f;
     public float missileCooldown = 4f;
+    public Transform MissileOffset = null;
 
     private FSMController<BossTransition> _fsmController = null;
     private Animator _animator = null;
@@ -79,7 +80,7 @@ public class BossBehaviour : MonoBehaviour
             if (ObjectPool.instance.TryGet(missilePrefab, out var missileObject))
             {
                 var missile = missileObject.GetComponent<Missile>();
-                missile.SetTarget(transform.position, target.transform.position);
+                missile.SetTarget(MissileOffset.position, target.transform.position);
             }
 
             yield return new WaitForSeconds(missileInterval);
