@@ -10,7 +10,6 @@ public class VirtualCollectorBehaviour : MonoBehaviour, IMovable, ICrasher, ICol
     public PlayerBehaviour PlayerCache;
     private bool isShooting = false;
     private bool isCharging = false;
-    private int throwStack = 1;
     private float innerTimer = 0f;
     private CircleCollider2D col;
 
@@ -89,7 +88,29 @@ public class VirtualCollectorBehaviour : MonoBehaviour, IMovable, ICrasher, ICol
 
     public void OnSwarmDead(ICollectable target)
     {
-        Throw(target, GlobalUtils.RandomWholeRange(2f));
+        Throw(target, target.Movable.Position + GlobalUtils.RandomWholeRange(2f));
+    }
+
+    public bool GetDamage(int dmg)
+    {
+        while (Swarm.Count > 0 && dmg > 0)
+        {
+            Swarm[0].GetDamage(1);
+            OnSwarmDead(Swarm[0]);
+            dmg--;
+        }
+
+        if (Swarm.Count > 0)
+        {
+            return true;
+        }
+
+        _veclocity = Vector3.zero;
+        isCharging = false;
+        isShooting = false;
+        gameObject.SetActive(false);
+
+        return (dmg <= 0);
     }
 
     #region IMovable
@@ -120,7 +141,7 @@ public class VirtualCollectorBehaviour : MonoBehaviour, IMovable, ICrasher, ICol
     
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.layer == 15 && isShooting)
+        if ((other.gameObject.layer & (1 << 15 | 1 << 17)) == 0 && isShooting)
         {
             var pos = other.ClosestPoint(Position);
             //TODO: Damage Effect

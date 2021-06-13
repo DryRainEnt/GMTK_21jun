@@ -111,6 +111,11 @@ public class PlayerBehaviour : MonoBehaviour, IMovable, ICrasher, ICollector
         }
         if (isCharging && Input.GetMouseButton(0))
         {
+            if (!VirtualCollectorCache)
+            {
+                isCharging = false;
+                return;
+            }
             innerTimer += dt;
             if (innerTimer > Mathf.Max(0.1f / (throwStack * 0.1f), 0.2f))
             {
