@@ -127,6 +127,7 @@ public class VirtualCollectorBehaviour : MonoBehaviour, IMovable, ICrasher, ICol
             
             while (Swarm.Count > 0)
             {
+                Swarm[0].GetDamage(1);
                 Throw(Swarm[0], Position.ToVector2() + ((Position.ToVector2() - pos) * 4) + GlobalUtils.RandomWholeRange(1f).ToVector2());
             }
             _veclocity = Vector3.zero;

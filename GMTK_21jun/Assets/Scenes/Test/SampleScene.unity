@@ -361,6 +361,9 @@ MonoBehaviour:
   - gameObject: {fileID: 3352974874943281951, guid: 8d1e3f22f7790c44398f000f7f379ce3,
       type: 3}
     count: 2
+  - gameObject: {fileID: 3357360331221591919, guid: c8297b23fbd599845835d437078c7220,
+      type: 3}
+    count: 8
   poolObjectParent: {fileID: 114340477}
 --- !u!4 &114340477
 Transform:
