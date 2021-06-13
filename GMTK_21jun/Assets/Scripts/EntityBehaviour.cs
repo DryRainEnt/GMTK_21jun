@@ -185,6 +185,9 @@ public class EntityBehaviour : MonoBehaviour, IMovable, ICrasher, ICollectable
         GameObject fx;
         ObjectPool.instance.TryGet(FXPrefab, out fx);
         fx.transform.position = GfxTransform.position;
+        hp = 1;
+        isFly = false;
+        isShoot = false;
         gameObject.SetActive(false);
     }
     

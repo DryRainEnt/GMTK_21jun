@@ -442,7 +442,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 463163946}
-  m_Layer: 15
+  m_Layer: 17
   m_Name: wall (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -541,7 +541,7 @@ GameObject:
   - component: {fileID: 598125506}
   - component: {fileID: 598125508}
   - component: {fileID: 598125507}
-  m_Layer: 15
+  m_Layer: 17
   m_Name: GFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -724,7 +724,7 @@ GameObject:
   - component: {fileID: 741156742}
   - component: {fileID: 741156744}
   - component: {fileID: 741156743}
-  m_Layer: 15
+  m_Layer: 17
   m_Name: GFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -908,7 +908,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1190731579}
-  m_Layer: 15
+  m_Layer: 17
   m_Name: wall (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1077,7 +1077,7 @@ GameObject:
   - component: {fileID: 1595204099}
   - component: {fileID: 1595204101}
   - component: {fileID: 1595204100}
-  m_Layer: 15
+  m_Layer: 17
   m_Name: GFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1266,7 +1266,7 @@ GameObject:
   - component: {fileID: 1752266907}
   - component: {fileID: 1752266909}
   - component: {fileID: 1752266908}
-  m_Layer: 15
+  m_Layer: 17
   m_Name: GFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2010,7 +2010,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2013191321}
-  m_Layer: 15
+  m_Layer: 17
   m_Name: wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2095,7 +2095,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2143950145}
-  m_Layer: 15
+  m_Layer: 17
   m_Name: wall (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
