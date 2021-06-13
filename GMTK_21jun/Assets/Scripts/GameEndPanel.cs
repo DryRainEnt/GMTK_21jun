@@ -25,12 +25,14 @@ public class GameEndPanel : MonoBehaviour
         if (isClearSFX)
         {
             GetComponent<AudioSource>().PlayOneShot(clearClip);
+            overClip = null;
             isClearSFX = false;
         }
 
         if (isOverSFX)
         {
             GetComponent<AudioSource>().PlayOneShot(overClip);
+            clearClip = null;
             isOverSFX = false;
         }
     }
