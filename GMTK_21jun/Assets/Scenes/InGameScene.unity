@@ -193,11 +193,6 @@ PrefabInstance:
       propertyPath: target
       value: 
       objectReference: {fileID: 1974990714}
-    - target: {fileID: 7789459628820139603, guid: 8b27b043e755da249b1b140bd47a77b0,
-        type: 3}
-      propertyPath: movementSpeed
-      value: 2
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8b27b043e755da249b1b140bd47a77b0, type: 3}
 --- !u!1 &119040603
@@ -336,7 +331,10 @@ MonoBehaviour:
     count: 16
   - gameObject: {fileID: 1630092235537382727, guid: 37bfbe380ad51b640bb5de04edd8280c,
       type: 3}
-    count: 48
+    count: 64
+  - gameObject: {fileID: 3357360331221591919, guid: c8297b23fbd599845835d437078c7220,
+      type: 3}
+    count: 64
   poolObjectParent: {fileID: 185169802}
 --- !u!4 &185169802
 Transform:
@@ -444,7 +442,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 463163946}
-  m_Layer: 15
+  m_Layer: 17
   m_Name: wall (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -543,7 +541,7 @@ GameObject:
   - component: {fileID: 598125506}
   - component: {fileID: 598125508}
   - component: {fileID: 598125507}
-  m_Layer: 15
+  m_Layer: 17
   m_Name: GFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -726,7 +724,7 @@ GameObject:
   - component: {fileID: 741156742}
   - component: {fileID: 741156744}
   - component: {fileID: 741156743}
-  m_Layer: 15
+  m_Layer: 17
   m_Name: GFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -910,7 +908,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1190731579}
-  m_Layer: 15
+  m_Layer: 17
   m_Name: wall (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1079,7 +1077,7 @@ GameObject:
   - component: {fileID: 1595204099}
   - component: {fileID: 1595204101}
   - component: {fileID: 1595204100}
-  m_Layer: 15
+  m_Layer: 17
   m_Name: GFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1268,7 +1266,7 @@ GameObject:
   - component: {fileID: 1752266907}
   - component: {fileID: 1752266909}
   - component: {fileID: 1752266908}
-  m_Layer: 15
+  m_Layer: 17
   m_Name: GFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2012,7 +2010,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2013191321}
-  m_Layer: 15
+  m_Layer: 17
   m_Name: wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2097,7 +2095,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2143950145}
-  m_Layer: 15
+  m_Layer: 17
   m_Name: wall (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

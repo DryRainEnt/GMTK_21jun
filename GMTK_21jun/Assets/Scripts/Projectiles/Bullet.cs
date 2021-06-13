@@ -27,4 +27,9 @@ public class Bullet : MonoBehaviour
             yield return waitForFixedUpdate;
         }
     }
+
+    public void Dispose()
+    {
+        gameObject.SetActive(false);
+    }
 }

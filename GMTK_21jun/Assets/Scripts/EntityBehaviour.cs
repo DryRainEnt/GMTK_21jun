@@ -167,7 +167,7 @@ public class EntityBehaviour : MonoBehaviour, IMovable, ICrasher, ICollectable
             {
                 _freeFall.Proceed(dt);
                 GfxTransform.localPosition = Vector3.up * _freeFall.GetHeight();
-                if (hp <= 0 && Random.value < 0.03f)
+                if (hp <= 0 && Random.value < 0.075f)
                 {
                     OnDead();
                 }
@@ -185,6 +185,9 @@ public class EntityBehaviour : MonoBehaviour, IMovable, ICrasher, ICollectable
         GameObject fx;
         ObjectPool.instance.TryGet(FXPrefab, out fx);
         fx.transform.position = GfxTransform.position;
+        hp = 1;
+        isFly = false;
+        isShoot = false;
         gameObject.SetActive(false);
     }
     
@@ -225,7 +228,13 @@ public class EntityBehaviour : MonoBehaviour, IMovable, ICrasher, ICollectable
 
         if (other.gameObject.layer == 16)
         {
+            other.gameObject.GetComponent<Bullet>()?.Dispose();
             GetDamage(1);
+            OnHit();
+        }
+
+        if (other.gameObject.layer == 15)
+        {
             OnHit();
         }
     }

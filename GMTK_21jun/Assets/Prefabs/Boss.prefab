@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9110338499065789455}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: BarrageOffset
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39,7 +39,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7789459628450750085}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: MissileOffset
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -71,7 +71,7 @@ GameObject:
   - component: {fileID: 7789459628750542154}
   - component: {fileID: 7789459628750542157}
   - component: {fileID: 7789459628750542156}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: BossBody
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -175,7 +175,8 @@ GameObject:
   - component: {fileID: 7789459628820139602}
   - component: {fileID: 7789459628820139603}
   - component: {fileID: 7789459628820139605}
-  m_Layer: 0
+  - component: {fileID: 6333057445634764014}
+  m_Layer: 15
   m_Name: Boss
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -251,6 +252,22 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!58 &6333057445634764014
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7789459628820139601}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: -2.36}
+  serializedVersion: 2
+  m_Radius: 0.5
 --- !u!1 &7789459629629994821
 GameObject:
   m_ObjectHideFlags: 0
@@ -262,7 +279,7 @@ GameObject:
   - component: {fileID: 7789459629629994820}
   - component: {fileID: 7789459629629994823}
   - component: {fileID: 7789459629629994822}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: LeftArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -364,7 +381,7 @@ GameObject:
   - component: {fileID: 7789459629767959688}
   - component: {fileID: 7789459629767959691}
   - component: {fileID: 7789459629767959690}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: RightArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
