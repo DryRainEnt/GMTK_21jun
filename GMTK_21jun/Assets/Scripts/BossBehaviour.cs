@@ -193,7 +193,7 @@ public class BossBehaviour : MonoBehaviour, ICrasher
         if (BossHPGauge)
             BossHPGauge.fillAmount = HP / (float)HPMax;
 
-        if (!isPhaseTwo && HP <= 49)
+        if (!isPhaseTwo && HP <= 25)
         {
             StartCoroutine(CoPhase2());
         }
