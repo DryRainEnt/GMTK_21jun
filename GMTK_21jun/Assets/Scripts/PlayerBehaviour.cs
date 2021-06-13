@@ -145,7 +145,7 @@ public class PlayerBehaviour : MonoBehaviour, IMovable, ICrasher, ICollector
             throwStack = 1;
         }
 
-        var cols = Physics2D.OverlapCircleAll(Position, 1f, LayerMask.NameToLayer("Entity"));
+        var cols = Physics2D.OverlapCircleAll(Position, 1f);
         foreach (var col in cols)
         {
             var ic = col.transform.GetComponent<ICollectable>();
