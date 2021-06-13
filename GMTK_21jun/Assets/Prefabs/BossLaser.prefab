@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6916408510802261367}
   - component: {fileID: 8799579467517632643}
   - component: {fileID: 809691794243881629}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: BossLaser
   m_TagString: Untagged
   m_Icon: {fileID: 0}

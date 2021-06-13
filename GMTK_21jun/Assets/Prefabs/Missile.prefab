@@ -129,7 +129,7 @@ MonoBehaviour:
   projectile: {fileID: 8559523031874702340}
   warningCircleRenderer: {fileID: 3326585308420751927}
   warningCircleColor: {r: 1, g: 0, b: 0, a: 1}
-  arrivalTime: 0.8
+  arrivalTime: 2
   groupingRadius: 1.5
 --- !u!1 &3446335985604347155
 GameObject:
