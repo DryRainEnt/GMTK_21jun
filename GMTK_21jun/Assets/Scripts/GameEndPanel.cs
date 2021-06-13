@@ -8,9 +8,12 @@ public class GameEndPanel : MonoBehaviour
 
     public GameObject clearPanel;
 
+    public PlayerBehaviour playerBehaviour;
+
     private void Awake()
     {
         timeRecorder.StopTime();
+        playerBehaviour.enabled = false;
     }
 
     public void GameCleared()
