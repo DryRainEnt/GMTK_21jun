@@ -200,31 +200,33 @@ PrefabInstance:
       objectReference: {fileID: 1798789090}
     - target: {fileID: 7789459628820139603, guid: 8b27b043e755da249b1b140bd47a77b0,
         type: 3}
-      propertyPath: barrageTime
+      propertyPath: leftArmRenderer
+      value: 
+      objectReference: {fileID: 95752106}
+    - target: {fileID: 7789459628820139603, guid: 8b27b043e755da249b1b140bd47a77b0,
+        type: 3}
+      propertyPath: doublePunchDelay
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7789459628820139603, guid: 8b27b043e755da249b1b140bd47a77b0,
         type: 3}
-      propertyPath: movementSpeed
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 7789459628820139603, guid: 8b27b043e755da249b1b140bd47a77b0,
-        type: 3}
-      propertyPath: barrageCooldown
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 7789459628820139603, guid: 8b27b043e755da249b1b140bd47a77b0,
-        type: 3}
-      propertyPath: missileCooldown
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 7789459628820139603, guid: 8b27b043e755da249b1b140bd47a77b0,
-        type: 3}
-      propertyPath: missileInterval
-      value: 0.5
-      objectReference: {fileID: 0}
+      propertyPath: rightArmRenderer
+      value: 
+      objectReference: {fileID: 95752105}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8b27b043e755da249b1b140bd47a77b0, type: 3}
+--- !u!212 &95752105 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 7789459629767959691, guid: 8b27b043e755da249b1b140bd47a77b0,
+    type: 3}
+  m_PrefabInstance: {fileID: 95752104}
+  m_PrefabAsset: {fileID: 0}
+--- !u!212 &95752106 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 7789459629629994823, guid: 8b27b043e755da249b1b140bd47a77b0,
+    type: 3}
+  m_PrefabInstance: {fileID: 95752104}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &119040603
 GameObject:
   m_ObjectHideFlags: 0
@@ -892,7 +894,7 @@ PrefabInstance:
     - target: {fileID: 6374342387613564711, guid: 7f2974ac875ffb8448b4a6173c7356c9,
         type: 3}
       propertyPath: startDelay
-      value: 3
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7f2974ac875ffb8448b4a6173c7356c9, type: 3}
@@ -1545,7 +1547,7 @@ PrefabInstance:
     - target: {fileID: 6374342387613564711, guid: 7f2974ac875ffb8448b4a6173c7356c9,
         type: 3}
       propertyPath: startDelay
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7f2974ac875ffb8448b4a6173c7356c9, type: 3}
@@ -2091,7 +2093,7 @@ PrefabInstance:
     - target: {fileID: 6374342387613564711, guid: 7f2974ac875ffb8448b4a6173c7356c9,
         type: 3}
       propertyPath: startDelay
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7f2974ac875ffb8448b4a6173c7356c9, type: 3}
