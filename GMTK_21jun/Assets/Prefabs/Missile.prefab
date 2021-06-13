@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 399241770284062206}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 6, y: 6, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 427703219179875651}
   m_RootOrder: 0
@@ -70,7 +70,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -2
-  m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: 4713fa5b38b47a04e9236bbeede6f320, type: 3}
   m_Color: {r: 1, g: 0, b: 0, a: 0.3764706}
   m_FlipX: 0
   m_FlipY: 0
@@ -133,6 +133,8 @@ MonoBehaviour:
   groupingRadius: 1.5
   warningClip: {fileID: 8300000, guid: 0fcce7a77c2f3b24ba487d2d789aaaff, type: 3}
   explosionClip: {fileID: 8300000, guid: 24061416f8e9d7546bcdc51461cdafb1, type: 3}
+  explosionPrefab: {fileID: 3357360331221591919, guid: c8297b23fbd599845835d437078c7220,
+    type: 3}
 --- !u!1 &3446335985604347155
 GameObject:
   m_ObjectHideFlags: 0
