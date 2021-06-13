@@ -217,22 +217,24 @@ MonoBehaviour:
   barragePrefab: {fileID: 1630092235537382727, guid: 37bfbe380ad51b640bb5de04edd8280c,
     type: 3}
   target: {fileID: 0}
-  movementSpeed: 2
+  movementSpeed: 4
   distanceThreshold: 3
   isChanneling: 0
   missileCount: 8
-  missileInterval: 0.08
-  missileCooldown: 4
+  missileInterval: 0.5
+  missileCooldown: 10
   missileOffset: {fileID: 7789459628450750085}
-  barrageTime: 5
+  barrageTime: 1
   barrageInterval: 0.4
-  barrageCooldown: 1
+  barrageCooldown: 8
   barrageAngles:
   - 45
   - -45
   - 135
   - -135
   barrageOffset: {fileID: 9110338499065789455}
+  HP: 1000
+  BossHPGauge: {fileID: 0}
 --- !u!95 &7789459628820139605
 Animator:
   serializedVersion: 3

@@ -195,6 +195,11 @@ PrefabInstance:
       objectReference: {fileID: 1974990714}
     - target: {fileID: 7789459628820139603, guid: 8b27b043e755da249b1b140bd47a77b0,
         type: 3}
+      propertyPath: BossHPGauge
+      value: 
+      objectReference: {fileID: 1798789090}
+    - target: {fileID: 7789459628820139603, guid: 8b27b043e755da249b1b140bd47a77b0,
+        type: 3}
       propertyPath: barrageTime
       value: 1
       objectReference: {fileID: 0}

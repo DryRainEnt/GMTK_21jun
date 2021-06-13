@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.UI;
 
 public enum BossTransition
 {
@@ -9,7 +10,7 @@ public enum BossTransition
     AttackFinished,
 }
 
-public class BossBehaviour : MonoBehaviour
+public class BossBehaviour : MonoBehaviour, ICrasher
 {
     public GameObject missilePrefab = null;
     public GameObject barragePrefab = null;
@@ -32,6 +33,9 @@ public class BossBehaviour : MonoBehaviour
 
     private FSMController<BossTransition> _fsmController = null;
     private Animator _animator = null;
+    
+    public int HP = 1000;
+    public Image BossHPGauge;
 
     public bool IsMissileCooldown { get; private set; } = false;
 
@@ -157,6 +161,16 @@ public class BossBehaviour : MonoBehaviour
 
         yield return new WaitForSeconds(barrageCooldown);
         IsBarrageCooldown = false;
+    }
+
+    public bool GetHit(int damage)
+    {
+        HP -= damage;
+        //TODO: 보스 피격 이펙트
+        if (BossHPGauge)
+            BossHPGauge.fillAmount = HP / 1000f;
+
+        return true;
     }
 }
 

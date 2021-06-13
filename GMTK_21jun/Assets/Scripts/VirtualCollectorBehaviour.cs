@@ -93,6 +93,7 @@ public class VirtualCollectorBehaviour : MonoBehaviour, IMovable, ICrasher, ICol
 
     public bool GetHit(int dmg)
     {
+        GetDamage(dmg);
         return false;
     }
 
@@ -150,6 +151,7 @@ public class VirtualCollectorBehaviour : MonoBehaviour, IMovable, ICrasher, ICol
         {
             var pos = other.ClosestPoint(Position);
             //TODO: Damage Effect
+            other.GetComponent<ICrasher>()?.GetHit(Swarm.Count);
             
             while (Swarm.Count > 0)
             {
