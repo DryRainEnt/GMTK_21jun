@@ -133,6 +133,7 @@ MonoBehaviour:
   VirtualColletorPrefab: {fileID: 3352974874943281951, guid: 8d1e3f22f7790c44398f000f7f379ce3,
     type: 3}
   VirtualCollectorCache: {fileID: 0}
+  GamePanel: {fileID: 0}
   isDashing: 0
   isCharging: 0
   throwStack: 1
@@ -141,6 +142,7 @@ MonoBehaviour:
   dashTimer: 0
   dashDelay: 0.2
   repositionDelay: 2
+  HP: 1
   _speed: 5
   _dashSpeed: 12
   height: 0
@@ -252,7 +254,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: -2311659948842064771, guid: 2f6c572bab86a784fb41b5e76d018802,
+  m_Sprite: {fileID: -7503402373696077091, guid: 336ab2a8f9677684fa162b008f668564,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
