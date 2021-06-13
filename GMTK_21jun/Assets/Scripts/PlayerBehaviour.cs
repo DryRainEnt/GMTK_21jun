@@ -113,11 +113,15 @@ public class PlayerBehaviour : MonoBehaviour, IMovable, ICrasher, ICollector
         }
         if (isCharging && Input.GetMouseButton(0))
         {
+            if (!VirtualCollectorCache.gameObject.activeSelf)
+                VirtualCollectorCache = null;
             if (!VirtualCollectorCache)
             {
+                _anim.Play("PlayerIdle");
                 isCharging = false;
                 return;
             }
+            
             innerTimer += dt;
             if (innerTimer > Mathf.Max(0.1f / (throwStack * 0.1f), 0.2f))
             {
@@ -199,6 +203,7 @@ public class PlayerBehaviour : MonoBehaviour, IMovable, ICrasher, ICollector
         HP -= damage;
         
         //TODO: 피격시 사망 연출
+        _anim.Play("PlayerDamaged");
         
         return false;
     }
@@ -212,12 +217,32 @@ public class PlayerBehaviour : MonoBehaviour, IMovable, ICrasher, ICollector
     private Vector3 _veclocity = Vector3.zero;
     public void UpdateVelocity(float dt)
     {
+        var totalVelocity = Velocity;
+        
+        if (isDashing)
+            totalVelocity = (_veclocity.magnitude > 1 ? _veclocity.normalized : _veclocity) * (_dashSpeed * dt);
+        else
+            totalVelocity = (_veclocity.magnitude > 1 ? _veclocity.normalized : _veclocity) * (_speed * dt);
+        
         //TODO: Velocity Collision Check
+        var xblock = Physics2D.RaycastAll(Position, 
+            totalVelocity.Coefficient(Vector3.right), totalVelocity.magnitude, 1 << 17);
+        var yblock = Physics2D.RaycastAll(Position, 
+            totalVelocity.Coefficient(Vector3.up).normalized, totalVelocity.magnitude, 1 << 17);
+        
+        if (xblock.Length > 0)
+        {
+            totalVelocity = totalVelocity.Coefficient(Vector3.up);
+        }
+        if (yblock.Length > 0)
+        {
+            totalVelocity = totalVelocity.Coefficient(Vector3.right);
+        }
 
         if (isDashing)
-            Position += (_veclocity.magnitude > 1 ? _veclocity.normalized : _veclocity) * (_dashSpeed * dt);
+            Position += totalVelocity;
         else
-            Position += (_veclocity.magnitude > 1 ? _veclocity.normalized : _veclocity) * (_speed * dt);
+            Position += totalVelocity;
         
         _veclocity *= _friction;
         
@@ -255,6 +280,12 @@ public class PlayerBehaviour : MonoBehaviour, IMovable, ICrasher, ICollector
         {
             if (ic.Index < 0)
                 Collect(ic);
+        }
+
+        if (other.gameObject.layer == LayerMask.NameToLayer("Damage"))
+        {
+            other.GetComponent<Bullet>()?.Dispose();
+            GetHit(1);
         }
     }
 }
