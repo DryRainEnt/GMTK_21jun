@@ -94,7 +94,7 @@ public class FollowerGenerator : MonoBehaviour
                 followers.Add(follower);
             }
 
-        followerByCoord.Add(coord, followers);
+        followerByCoord[coord] = (followers);
     }
 
     public void CollectedFollowerOn(Vector2 coord, GameObject follower)
