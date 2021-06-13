@@ -9,8 +9,12 @@ public class Missile : MonoBehaviour
     public float arrivalTime;
     public float groupingRadius;
 
+    public AudioClip warningClip;
+    public AudioClip explosionClip;
+
     public void SetTarget(Vector3 startPosition, Vector3 targetPosition)
     {
+        AudioSource.PlayClipAtPoint(warningClip, targetPosition);
         targetPosition.x += Random.Range(-groupingRadius, groupingRadius);
         targetPosition.y += Random.Range(-groupingRadius, groupingRadius);
         transform.position = targetPosition;
@@ -24,7 +28,11 @@ public class Missile : MonoBehaviour
 
         var yTween = projectile.DOMoveY(targetPosition.y, arrivalTime);
         yTween.SetEase(ease);
-        yTween.onComplete = () => DamageCheck(targetPosition);
+        yTween.onComplete = () =>
+        {
+            DamageCheck(targetPosition);
+            AudioSource.PlayClipAtPoint(explosionClip, targetPosition);
+        };
         
         var xTween = projectile.DOMoveX(targetPosition.x, arrivalTime);
         xTween.SetEase(Ease.InQuad);

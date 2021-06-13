@@ -217,6 +217,7 @@ MonoBehaviour:
   barragePrefab: {fileID: 1630092235537382727, guid: 37bfbe380ad51b640bb5de04edd8280c,
     type: 3}
   target: {fileID: 0}
+  laserParent: {fileID: 0}
   movementSpeed: 4
   distanceThreshold: 3
   isChanneling: 0
@@ -236,8 +237,14 @@ MonoBehaviour:
   - 135
   - -135
   barrageOffset: {fileID: 9110338499065789455}
-  leftArmRenderer: {fileID: 0}
-  rightArmRenderer: {fileID: 0}
+  leftArmRenderer: {fileID: 7789459629629994823}
+  rightArmRenderer: {fileID: 7789459629767959691}
+  bossBodyRenderer: {fileID: 7789459628750542157}
+  phaseTwoColor: {r: 0, g: 0, b: 0, a: 0}
+  missileLaunchClip: {fileID: 8300000, guid: d6eeb2ea67dd2b14eb6e335c815b6ff7, type: 3}
+  hitSoundClip: {fileID: 8300000, guid: 526f02b20d0cb42458546681e38f66e3, type: 3}
+  gunFireClip: {fileID: 8300000, guid: 466c1bebc3e4d7d4c9e693f7fee761bf, type: 3}
+  punchClip: {fileID: 8300000, guid: 511ef98883cb366478b58b7e68b85401, type: 3}
   GamePanel: {fileID: 0}
   HPMax: 50
   HP: 50

@@ -42,6 +42,11 @@ public class BossBehaviour : MonoBehaviour, ICrasher
     public SpriteRenderer bossBodyRenderer = null;
     public Color phaseTwoColor;
 
+    public AudioClip missileLaunchClip;
+    public AudioClip hitSoundClip;
+    public AudioClip gunFireClip;
+    public AudioClip punchClip;
+
     private FSMController<BossTransition> _fsmController = null;
     private Animator _animator = null;
 
@@ -110,6 +115,7 @@ public class BossBehaviour : MonoBehaviour, ICrasher
             if (ObjectPool.instance.TryGet(missilePrefab, out var missileObject))
             {
                 var missile = missileObject.GetComponent<Missile>();
+                AudioSource.PlayClipAtPoint(missileLaunchClip, missileOffset.position);
                 missile.SetTarget(missileOffset.position, target.transform.position);
             }
 
@@ -137,9 +143,12 @@ public class BossBehaviour : MonoBehaviour, ICrasher
         rightArmRenderer.DOColor(Color.red, doublePunchChargeTime);
         yield return new WaitForSeconds(doublePunchChargeTime);
         _animator.SetTrigger("DoublePunch");
+        AudioSource.PlayClipAtPoint(punchClip, transform.position);
         leftArmRenderer.DOColor(originalColor, doublePunchDelay);
         rightArmRenderer.DOColor(originalColor, doublePunchDelay);
-        yield return new WaitForSeconds(doublePunchDelay);
+        yield return new WaitForSeconds(0.3f);
+        AudioSource.PlayClipAtPoint(punchClip, transform.position);
+        yield return new WaitForSeconds(doublePunchDelay - 0.1f);
         isChanneling = false;
         DoTransition(BossTransition.AttackFinished);
     }
@@ -171,6 +180,7 @@ public class BossBehaviour : MonoBehaviour, ICrasher
                 }
             }
 
+            AudioSource.PlayClipAtPoint(gunFireClip, transform.position);
             yield return interval;
             elapsed += barrageInterval;
         }
@@ -188,6 +198,7 @@ public class BossBehaviour : MonoBehaviour, ICrasher
 
     public bool GetHit(int damage)
     {
+        AudioSource.PlayClipAtPoint(hitSoundClip, transform.position);
         HP -= damage;
         //TODO: 보스 피격 이펙트
         if (BossHPGauge)

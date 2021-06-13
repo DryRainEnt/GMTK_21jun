@@ -131,6 +131,8 @@ MonoBehaviour:
   warningCircleColor: {r: 1, g: 0, b: 0, a: 1}
   arrivalTime: 2
   groupingRadius: 1.5
+  warningClip: {fileID: 8300000, guid: 0fcce7a77c2f3b24ba487d2d789aaaff, type: 3}
+  explosionClip: {fileID: 8300000, guid: 24061416f8e9d7546bcdc51461cdafb1, type: 3}
 --- !u!1 &3446335985604347155
 GameObject:
   m_ObjectHideFlags: 0

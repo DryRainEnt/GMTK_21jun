@@ -28,6 +28,7 @@ public class LaserCannon : MonoBehaviour
     public Transform target;
 
     public GameObject laserPrefab;
+    public AudioSource source;
 
     private void Awake()
     {
@@ -87,6 +88,7 @@ public class LaserCannon : MonoBehaviour
                 }
             }
 
+            AudioSource.PlayClipAtPoint(source.clip, transform.position);
             collider.enabled = true;
             renderer.color = Color.white;
             laserObject.transform.DOScaleX(0f, shortLaserDuration);
