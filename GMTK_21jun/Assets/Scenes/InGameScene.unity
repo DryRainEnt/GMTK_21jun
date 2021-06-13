@@ -210,6 +210,11 @@ PrefabInstance:
       objectReference: {fileID: 1798789090}
     - target: {fileID: 7789459628820139603, guid: 8b27b043e755da249b1b140bd47a77b0,
         type: 3}
+      propertyPath: barrageDelay
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7789459628820139603, guid: 8b27b043e755da249b1b140bd47a77b0,
+        type: 3}
       propertyPath: leftArmRenderer
       value: 
       objectReference: {fileID: 95752106}
@@ -438,7 +443,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1550091355}
-  baseOthoSize: 2.5
+  baseOthoSize: 6
   levelPerScaleValue: 1.2
 --- !u!114 &286864510
 MonoBehaviour:
@@ -2509,6 +2514,11 @@ PrefabInstance:
       propertyPath: GamePanel
       value: 
       objectReference: {fileID: 733889308}
+    - target: {fileID: 3730483256608857450, guid: 208655a30fbdce14a8ca4a5b06644425,
+        type: 3}
+      propertyPath: vCamZoomer
+      value: 
+      objectReference: {fileID: 286864509}
     - target: {fileID: 3730483256608857450, guid: 208655a30fbdce14a8ca4a5b06644425,
         type: 3}
       propertyPath: VirtualColletorPrefab

@@ -29,6 +29,7 @@ public class BossBehaviour : MonoBehaviour, ICrasher
     public Transform missileOffset = null;
 
     public float barrageTime;
+    public float barrageDelay;
     public float barrageInterval;
     public float barrageCooldown;
     public float[] barrageAngles;
@@ -146,6 +147,7 @@ public class BossBehaviour : MonoBehaviour, ICrasher
         isChanneling = true;
         IsBarrageCooldown = true;
         _animator.SetTrigger("BarrageStart");
+        yield return new WaitForSeconds(barrageDelay);
 
         var interval = new WaitForSeconds(barrageInterval);
         var elapsed = 0.0f;

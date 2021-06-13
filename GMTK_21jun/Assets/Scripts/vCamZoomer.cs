@@ -8,19 +8,16 @@ public class vCamZoomer : MonoBehaviour
 {
     public PlayerBehaviour player;
 
-    public float baseOthoSize = 5;
-    public float levelPerScaleValue = 3;
+    public float baseOthoSize;
+    public float levelPerScaleValue;
 
     CinemachineVirtualCamera cinemachine;
+    Coroutine _coroutine = null;
 
     private void Start()
     {
         cinemachine = GetComponent<CinemachineVirtualCamera>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        cinemachine.m_Lens.OrthographicSize = baseOthoSize + (GlobalUtils.GetSwarmLevel(player.Swarm.Count) * levelPerScaleValue);
+        cinemachine.m_Lens.OrthographicSize = baseOthoSize;
+        //cinemachine.m_Lens.OrthographicSize = baseOthoSize + (GlobalUtils.GetSwarmLevel(player.Swarm.Count) * levelPerScaleValue);
     }
 }
