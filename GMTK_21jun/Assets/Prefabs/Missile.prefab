@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5215129490346560362}
   - component: {fileID: 3326585308420751927}
   m_Layer: 8
-  m_Name: WarningRadius
+  m_Name: WarningCircle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -127,7 +127,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectile: {fileID: 8559523031874702340}
-  arrivalTime: 1
+  warningCircleRenderer: {fileID: 3326585308420751927}
+  warningCircleColor: {r: 1, g: 0, b: 0, a: 1}
+  arrivalTime: 0.8
   groupingRadius: 1.5
 --- !u!1 &3446335985604347155
 GameObject:

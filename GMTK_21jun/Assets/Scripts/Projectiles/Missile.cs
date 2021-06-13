@@ -4,6 +4,8 @@ using UnityEngine;
 public class Missile : MonoBehaviour
 {
     public Transform projectile = null;
+    public SpriteRenderer warningCircleRenderer = null;
+    public Color warningCircleColor;
     public float arrivalTime;
     public float groupingRadius;
 
@@ -13,6 +15,8 @@ public class Missile : MonoBehaviour
         targetPosition.y += Random.Range(-groupingRadius, groupingRadius);
         transform.position = targetPosition;
         projectile.position = startPosition;
+        warningCircleColor.a = 0;
+        warningCircleRenderer.color = warningCircleColor;
 
         Vector2 diff = targetPosition - startPosition;
         var isPositiveY = diff.y < 0;
@@ -24,5 +28,7 @@ public class Missile : MonoBehaviour
 
         var xTween = projectile.DOMoveX(targetPosition.x, arrivalTime);
         xTween.SetEase(Ease.InQuad);
+
+        warningCircleRenderer.DOFade(1f, arrivalTime);
     }
 }
