@@ -14,4 +14,5 @@ public interface ICollectable
     void GetReady();
     void ResetState();
     void OnAir();
+    void GetDamage(int dmg);
 }

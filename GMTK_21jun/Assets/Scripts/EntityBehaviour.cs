@@ -4,6 +4,7 @@ using System.Collections.Generic;
 //using System.Net.Configuration;
 using UnityEngine;
 using UnityEngine.Events;
+using Random = UnityEngine.Random;
 
 public class EntityBehaviour : MonoBehaviour, IMovable, ICrasher, ICollectable
 {
@@ -14,6 +15,8 @@ public class EntityBehaviour : MonoBehaviour, IMovable, ICrasher, ICollectable
     public bool isShoot = false;
     public Vector3 destination = Vector3.zero;
     public float distMult = 1f;
+
+    public GameObject FXPrefab;
 
     public int hp = 1;
 
@@ -94,6 +97,7 @@ public class EntityBehaviour : MonoBehaviour, IMovable, ICrasher, ICollectable
 
     public void Collected(ICollector target)
     {
+        hp = 1;
         _anim.Play("DroneIdle");
         _collector = target;
         isFly = false;
@@ -113,6 +117,12 @@ public class EntityBehaviour : MonoBehaviour, IMovable, ICrasher, ICollectable
         isFly = false;
         isShoot = false;
     }
+
+    public void GetDamage(int dmg)
+    {
+        hp -= dmg;
+    }
+    
 
     #endregion
     
@@ -149,18 +159,33 @@ public class EntityBehaviour : MonoBehaviour, IMovable, ICrasher, ICollectable
                 _freeFall = null;
                 
                 if (hp <= 0)
-                    gameObject.SetActive(false);
+                {
+                    OnDead();
+                }
             }
             else
             {
                 _freeFall.Proceed(dt);
                 GfxTransform.localPosition = Vector3.up * _freeFall.GetHeight();
+                if (hp <= 0 && Random.value < 0.03f)
+                {
+                    OnDead();
+                }
+
             }
         }
         else
         {
             _veclocity *= _friction;
         }
+    }
+
+    void OnDead()
+    {
+        GameObject fx;
+        ObjectPool.instance.TryGet(FXPrefab, out fx);
+        fx.transform.position = GfxTransform.position;
+        gameObject.SetActive(false);
     }
     
     public Vector3 Velocity 
@@ -200,6 +225,7 @@ public class EntityBehaviour : MonoBehaviour, IMovable, ICrasher, ICollectable
 
         if (other.gameObject.layer == 16)
         {
+            GetDamage(1);
             OnHit();
         }
     }

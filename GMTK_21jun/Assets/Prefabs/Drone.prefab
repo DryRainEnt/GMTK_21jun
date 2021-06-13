@@ -149,6 +149,8 @@ MonoBehaviour:
   isShoot: 0
   destination: {x: 0, y: 0, z: 0}
   distMult: 1
+  FXPrefab: {fileID: 3357360331221591919, guid: c8297b23fbd599845835d437078c7220,
+    type: 3}
   hp: 1
   _index: -1
   _speed: 10
