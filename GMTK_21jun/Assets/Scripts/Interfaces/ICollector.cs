@@ -8,4 +8,9 @@ public interface ICollector
 
     void Collect(ICollectable target);
     void Throw(ICollectable target, Vector3 pos);
+    void MoveTo(ICollectable target, ICollector swarm);
+    void OnSwarmDead(ICollectable target);
+    bool isFlip { get; }
+    
+    CollectType Type { get; }
 }

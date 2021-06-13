@@ -1,22 +1,32 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+//using System.Net.Configuration;
 using UnityEngine;
 using UnityEngine.Events;
 
 public class EntityBehaviour : MonoBehaviour, IMovable, ICrasher, ICollectable
 {
     private Animator _anim;
+    private SpriteRenderer _sr;
     private FreeFallManager _freeFall;
     public bool isFly = false;
-    private Vector3 destination = Vector3.zero;
+    public bool isShoot = false;
+    public Vector3 destination = Vector3.zero;
+    public float distMult = 1f;
 
+    public int hp = 1;
+
+    public float Distance { get => distMult; set => distMult = value; }
     public Transform GfxTransform => transform.Find("GFX");
 
     private UnityEvent onCollected = new UnityEvent();
+
+    public IMovable Movable => this;
     
     private void Awake()
     {
+        _sr = GetComponentInChildren<SpriteRenderer>();
         _anim = GetComponentInChildren<Animator>();
     }
 
@@ -31,8 +41,14 @@ public class EntityBehaviour : MonoBehaviour, IMovable, ICrasher, ICollectable
         if (!isFly)
         {
             if (_collector != null)
+            {
                 _veclocity = _collector.Transform.position +
-                    Index.GetSwarmOffset() - Position;
+                    Index.GetSwarmOffset(_collector.Type, distMult) - Position;
+                if (_collector.Type == CollectType.Player)
+                {
+                    _sr.flipX = _collector.isFlip;
+                }
+            }
             else
                 _veclocity = Vector3.zero;
         }
@@ -59,38 +75,63 @@ public class EntityBehaviour : MonoBehaviour, IMovable, ICrasher, ICollectable
 
     public void Fly(Vector3 targetPos)
     {
+        isShoot = false;
+        Position = _collector.Transform.position +
+                   Index.GetSwarmOffset(_collector.Type);
         destination = targetPos;
         _veclocity = destination - Position;
         _collector = null;
-        _anim.Play("EntityFly");
+        // _anim.Play("EntityFly");
         _freeFall = new FreeFallManager(3, 9.8f, 1, 0);
         isFly = true;
     }
 
+    public void OnAir()
+    {
+        isShoot = true;
+        // _anim.Play("EntityFly");
+    }
+
     public void Collected(ICollector target)
     {
-        _anim.Play("EntityIdle");
+        _anim.Play("DroneIdle");
         _collector = target;
+        isFly = false;
+        distMult = 1f;
     }
 
     public void GetReady()
     {
-        _anim.Play("EntityReady");
+        _anim.Play("DroneReady");
+        
+        isFly = false;
+    }
+
+    public void ResetState()
+    {
+        _anim.Play("DroneIdle");
+        isFly = false;
+        isShoot = false;
     }
 
     #endregion
     
     #region IMovable
 
-    [SerializeField] private float _speed = 0.3f;
-    private float _friction = 0.9f;
+    [SerializeField] private float _speed = 3f;
+    private float _friction = 0.98f;
 
     private Vector3 _veclocity = Vector3.zero;
     public void UpdateVelocity(float dt)
     {
         //TODO: Velocity Collision Check
 
-        Position += (_veclocity.magnitude > 1 ? _veclocity.normalized : _veclocity) * _speed;
+        if (isShoot)
+            Position += _veclocity;
+        else if (!isFly)
+            Position += (_veclocity.magnitude > 1 ? _veclocity.normalized : _veclocity) * (_speed / distMult * dt);
+        else
+            Position += _veclocity * dt;
         
         if (_veclocity.magnitude < Mathf.Epsilon)
             _veclocity = Vector3.zero;
@@ -102,10 +143,13 @@ public class EntityBehaviour : MonoBehaviour, IMovable, ICrasher, ICollectable
             if (h < 0)
             {
                 _index = -1;
-                _anim.Play("EntityDown");
+                _anim.Play("DroneDown");
                 GfxTransform.localPosition = Vector3.zero;
                 isFly = false;
                 _freeFall = null;
+                
+                if (hp <= 0)
+                    gameObject.SetActive(false);
             }
             else
             {
@@ -135,10 +179,17 @@ public class EntityBehaviour : MonoBehaviour, IMovable, ICrasher, ICollectable
     public float height;
 
     #endregion
+
+    public void OnHit()
+    {
+        if (_collector != null)
+            _collector.OnSwarmDead(this);
+    }
     
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (_collector == null) return;
+        if (_collector.Type == CollectType.Virtual) return;
             
         var ic = other.transform.GetComponent<ICollectable>();
         if (ic != null)
@@ -146,9 +197,14 @@ public class EntityBehaviour : MonoBehaviour, IMovable, ICrasher, ICollectable
             if (ic.Index < 0)
                 _collector.Collect(ic);
         }
+
+        if (other.gameObject.layer == 16)
+        {
+            OnHit();
+        }
     }
 
-    public void AddCollectedEventListener(FollowerGenerator generator,Vector2 coord)
+    public void AddCollectedEventListener(FollowerGenerator generator, Vector2 coord)
     {
         UnityAction addedListener = () => generator.CollectedFollowerOn(coord, gameObject);
 
