@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
+using DG.Tweening;
 
 public enum BossTransition
 {
@@ -10,25 +11,31 @@ public enum BossTransition
 
 public class BossBehaviour : MonoBehaviour
 {
-    public GameObject laserPrefab = null;
+    public GameObject missilePrefab = null;
     public GameObject target = null;
 
-    public float laserWidth = 20f;
-    public float laserLength = 1000f;
     public float movementSpeed = 2.0f;
-    public float distanceThreshold = 5.0f;
+    public float distanceThreshold = 3.0f;
     public bool isChanneling = false;
 
+    public int missileCount = 4;
+    public float missileInterval = 0.2f;
+    public float missileCooldown = 4f;
+
     private FSMController<BossTransition> _fsmController = null;
+    private Animator _animator = null;
+
+    public bool IsMissileCooldown { get; private set; } = false;
 
     private void Awake()
     {
+        _animator = GetComponent<Animator>();
         InitFSM();
     }
 
     private void InitFSM()
     {
-        var followPlayer = new FollowPlayer(movementSpeed, distanceThreshold);
+        var followPlayer = new FollowPlayer(movementSpeed);
         var attackPlayer = new AttackPlayer(1.0f);
 
         _fsmController = new FSMController<BossTransition>();
@@ -57,27 +64,45 @@ public class BossBehaviour : MonoBehaviour
         }
     }
 
-    public void LaunchLaser(Vector3 diff)
+    public void MissileAttack()
     {
-        StartCoroutine(CoLaunchLaser(diff));
+        StartCoroutine(CoMissileAttack());
     }
 
-    private IEnumerator CoLaunchLaser(Vector3 diff)
+    private IEnumerator CoMissileAttack()
     {
-        if (!ObjectPool.instance.TryGet(laserPrefab, out var laserObject))
-        {
-            DoTransition(BossTransition.AttackFinished);
-            yield break;
-        }
-
         isChanneling = true;
-        var direction = diff.normalized;
-        // 레이저 길이 절반 * (1 / 100) * (100 / 32) <- PPU
-        laserObject.transform.position = transform.position + (direction * laserLength * 0.5f * 0.03125f);
-        laserObject.transform.right = direction;
-        laserObject.transform.localScale = new Vector3(laserLength, laserWidth, 1f);
-        yield return new WaitForSeconds(3.0f);
-        laserObject.gameObject.SetActive(false);
+        IsMissileCooldown = true;
+        _animator.SetTrigger("MissileAttack");
+        for (int i = 0; i < missileCount; ++i)
+        {
+            if (ObjectPool.instance.TryGet(missilePrefab, out var missileObject))
+            {
+                var missile = missileObject.GetComponent<Missile>();
+                missile.SetTarget(transform.position, target.transform.position);
+            }
+
+            yield return new WaitForSeconds(missileInterval);
+        }
+        isChanneling = false;
+        DoTransition(BossTransition.AttackFinished);
+
+        yield return new WaitForSeconds(missileCooldown);
+        IsMissileCooldown = false;
+    }
+
+    public void DoublePunch()
+    {
+        StartCoroutine(CoDoublePunch());
+    }
+
+    private IEnumerator CoDoublePunch()
+    {
+        isChanneling = true;
+        _animator.SetTrigger("DoublePunch");
+        var animationTime = _animator.GetCurrentAnimatorStateInfo(0).length;
+        Debug.Log(animationTime);
+        yield return new WaitForSeconds(animationTime);
         isChanneling = false;
         DoTransition(BossTransition.AttackFinished);
     }
@@ -89,10 +114,9 @@ public class FollowPlayer : FSMState<BossTransition>
 
     public float DistanceThreshold { get; }
 
-    public FollowPlayer(float movementSpeed, float distanceThreshold)
+    public FollowPlayer(float movementSpeed)
     {
         MovementSpeed = movementSpeed;
-        DistanceThreshold = distanceThreshold;
         _stateMap[BossTransition.AimPlayer] = nameof(AttackPlayer);
     }
     
@@ -100,10 +124,11 @@ public class FollowPlayer : FSMState<BossTransition>
     {
         var actorPosition = actor.transform.position;
         var targetPosition = target.transform.position;
+        var controller = actor.GetComponent<BossBehaviour>();
 
-        if (Vector2.Distance(actorPosition, targetPosition) <= DistanceThreshold)
+        if (!controller.IsMissileCooldown ||
+            Vector2.Distance(actorPosition, targetPosition) <= controller.distanceThreshold)
         {
-            var controller = actor.GetComponent<BossBehaviour>();
             controller.DoTransition(BossTransition.AimPlayer);
         }
     }
@@ -140,9 +165,18 @@ public class AttackPlayer : FSMState<BossTransition>
 
     public override void Act(GameObject actor, GameObject target)
     {
+        var actorPosition = actor.transform.position;
+        var targetPosition = target.transform.position;
         var controller = actor.GetComponent<BossBehaviour>();
-        var diff = target.transform.position - actor.transform.position;
-        controller.LaunchLaser(diff);
+
+        if (Vector2.Distance(actorPosition, targetPosition) <= controller.distanceThreshold)
+        {
+            controller.DoublePunch();
+        }
+        else
+        {
+            controller.MissileAttack();
+        }
     }
 
     public override string GetStateId()

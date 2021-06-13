@@ -30,4 +30,11 @@ public static class GlobalUtils
         
         return new Vector3(Mathf.Cos(angle), Mathf.Sin(angle) * 0.7f) * level;
     }
+
+    public static float GetAngle(this Vector2 vector)
+    {
+        var angle = Mathf.Atan2(vector.y, vector.x) * Mathf.Rad2Deg;
+        if (angle < 0) angle += 360f;
+        return angle;
+    }
 }
