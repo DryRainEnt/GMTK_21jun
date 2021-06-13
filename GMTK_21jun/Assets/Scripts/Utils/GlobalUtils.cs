@@ -111,6 +111,6 @@ public static class GlobalUtils
 
     public static Quaternion Vector3ToRotation(this Vector3 v)
     {
-        return Quaternion.Euler(0, 0, -Vector3.Angle(Vector3.right, v));
+        return Quaternion.Euler(0, 0, Vector3.Angle(Vector3.right, v));
     }
 }

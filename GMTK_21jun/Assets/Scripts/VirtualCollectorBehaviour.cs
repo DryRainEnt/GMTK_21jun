@@ -151,6 +151,8 @@ public class VirtualCollectorBehaviour : MonoBehaviour, IMovable, ICrasher, ICol
     {
         if (other.gameObject.layer >= 15 && isShooting)
         {
+            if (Swarm.Count == 0) return;
+            
             var pos = other.ClosestPoint(Position);
             //TODO: Damage Effect
             other.GetComponent<ICrasher>()?.GetHit(Swarm.Count + 
