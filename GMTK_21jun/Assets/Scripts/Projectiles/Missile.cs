@@ -11,6 +11,7 @@ public class Missile : MonoBehaviour
 
     public AudioClip warningClip;
     public AudioClip explosionClip;
+    public GameObject explosionPrefab;
 
     public void SetTarget(Vector3 startPosition, Vector3 targetPosition)
     {
@@ -30,6 +31,10 @@ public class Missile : MonoBehaviour
         yTween.SetEase(ease);
         yTween.onComplete = () =>
         {
+            ObjectPool.instance.TryGet(explosionPrefab, out var fx);
+            fx.transform.position = targetPosition;
+            //fx.transform.localScale = new Vector3(2, 2f, 2f);
+
             DamageCheck(targetPosition);
             AudioSource.PlayClipAtPoint(explosionClip, targetPosition);
         };
@@ -38,7 +43,6 @@ public class Missile : MonoBehaviour
         xTween.SetEase(Ease.InQuad);
 
         warningCircleRenderer.DOFade(1f, arrivalTime);
-        
     }
 
     void DamageCheck(Vector3 pos)

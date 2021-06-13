@@ -88,7 +88,7 @@ public class LaserCannon : MonoBehaviour
                 }
             }
 
-            AudioSource.PlayClipAtPoint(source.clip, transform.position);
+            source.PlayOneShot(source.clip, 0.5f);
             collider.enabled = true;
             renderer.color = Color.white;
             laserObject.transform.DOScaleX(0f, shortLaserDuration);
