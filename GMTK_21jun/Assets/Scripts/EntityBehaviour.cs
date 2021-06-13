@@ -25,13 +25,18 @@ public class EntityBehaviour : MonoBehaviour, IMovable, ICrasher, ICollectable
 
     private UnityEvent onCollected = new UnityEvent();
 
+    private AudioSource _audio;
+    public AudioClip HitSound;
+    
     public IMovable Movable => this;
     
     private void Awake()
     {
+        _audio = GetComponent<AudioSource>();
         _sr = GetComponentInChildren<SpriteRenderer>();
         _anim = GetComponentInChildren<Animator>();
         GfxTransform.localPosition = Vector3.zero;
+        _audio.clip = HitSound;
     }
 
     // Start is called before the first frame update
@@ -197,6 +202,7 @@ public class EntityBehaviour : MonoBehaviour, IMovable, ICrasher, ICollectable
         fx.transform.position = GfxTransform.position;
         GfxTransform.localPosition = Vector3.zero;
         Position = Position.GetXY(0);
+        _audio.Play();
         hp = 1;
         isFly = false;
         isShoot = false;

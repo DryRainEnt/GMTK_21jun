@@ -16,6 +16,13 @@ public class PlayerBehaviour : MonoBehaviour, IMovable, ICrasher, ICollector
     private Animator _anim;
     private SpriteRenderer _sr;
 
+    public AudioClip DashSound;
+    public AudioClip DamageSound;
+    public AudioClip ChargeSound;
+    public AudioClip GetSound;
+
+    private AudioSource _audio;
+
     public bool isFlip => _sr && _sr.flipX;
     
     public CollectType Type => CollectType.Player;
@@ -34,6 +41,7 @@ public class PlayerBehaviour : MonoBehaviour, IMovable, ICrasher, ICollector
     
     private void Awake()
     {
+        _audio = GetComponent<AudioSource>();
         _anim = GetComponentInChildren<Animator>();
         _sr = GetComponentInChildren<SpriteRenderer>();
         Swarm = new List<ICollectable>();
@@ -79,6 +87,7 @@ public class PlayerBehaviour : MonoBehaviour, IMovable, ICrasher, ICollector
 
         if (Input.GetKeyDown(KeyCode.Space) && dashTimer < 0f)
         {
+            _audio.PlayOneShot(DashSound);
             ChargeCancel();
             isDashing = true;
             dashTimer = 0f;
@@ -152,7 +161,10 @@ public class PlayerBehaviour : MonoBehaviour, IMovable, ICrasher, ICollector
             if (ic != null)
             {
                 if (ic.Index < 0)
+                {
+                    _audio.PlayOneShot(GetSound);
                     Collect(ic);
+                }
             }
         }
 
@@ -219,6 +231,7 @@ public class PlayerBehaviour : MonoBehaviour, IMovable, ICrasher, ICollector
         HP -= damage;
         
         //TODO: 피격시 사망 연출
+        _audio.PlayOneShot(DamageSound, 1f);
         _anim.Play("PlayerDamaged");
         GamePanel.GameOvered();
         
