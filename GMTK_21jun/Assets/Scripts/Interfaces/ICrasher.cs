@@ -4,4 +4,5 @@ using UnityEngine;
 
 public interface ICrasher
 {
+    bool GetHit(int damage);
 }

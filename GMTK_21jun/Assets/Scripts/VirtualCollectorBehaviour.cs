@@ -91,6 +91,11 @@ public class VirtualCollectorBehaviour : MonoBehaviour, IMovable, ICrasher, ICol
         Throw(target, target.Movable.Position + GlobalUtils.RandomWholeRange(2f));
     }
 
+    public bool GetHit(int dmg)
+    {
+        return false;
+    }
+
     public bool GetDamage(int dmg)
     {
         while (Swarm.Count > 0 && dmg > 0)
@@ -141,7 +146,7 @@ public class VirtualCollectorBehaviour : MonoBehaviour, IMovable, ICrasher, ICol
     
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if ((other.gameObject.layer & (1 << 15 | 1 << 17)) == 0 && isShooting)
+        if (other.gameObject.layer >= 15 && isShooting)
         {
             var pos = other.ClosestPoint(Position);
             //TODO: Damage Effect
@@ -154,6 +159,16 @@ public class VirtualCollectorBehaviour : MonoBehaviour, IMovable, ICrasher, ICol
             _veclocity = Vector3.zero;
             isShooting = false;
             gameObject.SetActive(false);
+        }
+
+        if (other.gameObject.layer == 16)
+        {
+            var bullet = other.GetComponent<Bullet>();
+            if (bullet)
+            {
+                GetDamage(1);
+                bullet.Dispose();
+            }
         }
     }
 }
