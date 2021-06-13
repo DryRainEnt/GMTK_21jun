@@ -10,20 +10,41 @@ public class GameEndPanel : MonoBehaviour
 
     public PlayerBehaviour playerBehaviour;
 
-    private void Awake()
+    public AudioClip clearClip, overClip;
+
+    bool isClearSFX, isOverSFX;
+
+    void Awake()
     {
         timeRecorder.StopTime();
         playerBehaviour.enabled = false;
     }
 
+    private void Update()
+    {
+        if (isClearSFX)
+        {
+            GetComponent<AudioSource>().PlayOneShot(clearClip);
+            isClearSFX = false;
+        }
+
+        if (isOverSFX)
+        {
+            GetComponent<AudioSource>().PlayOneShot(overClip);
+            isOverSFX = false;
+        }
+    }
+
     public void GameCleared()
     {
+        isClearSFX = true;
         gameObject.SetActive(true);
         clearPanel.SetActive(true);
     }
 
     public void GameOvered()
     {
+        isOverSFX = true;
         gameObject.SetActive(true);
     }
 }
