@@ -12,21 +12,30 @@ public enum BossTransition
 public class BossBehaviour : MonoBehaviour
 {
     public GameObject missilePrefab = null;
+    public GameObject barragePrefab = null;
     public GameObject target = null;
 
-    public float movementSpeed = 2.0f;
-    public float distanceThreshold = 3.0f;
+    public float movementSpeed;
+    public float distanceThreshold;
     public bool isChanneling = false;
 
-    public int missileCount = 4;
-    public float missileInterval = 0.2f;
-    public float missileCooldown = 4f;
-    public Transform MissileOffset = null;
+    public int missileCount;
+    public float missileInterval;
+    public float missileCooldown;
+    public Transform missileOffset = null;
+
+    public float barrageTime;
+    public float barrageInterval;
+    public float barrageCooldown;
+    public float[] barrageAngles;
+    public Transform barrageOffset = null;
 
     private FSMController<BossTransition> _fsmController = null;
     private Animator _animator = null;
 
     public bool IsMissileCooldown { get; private set; } = false;
+
+    public bool IsBarrageCooldown { get; private set; } = false;
 
     private void Awake()
     {
@@ -75,15 +84,17 @@ public class BossBehaviour : MonoBehaviour
         isChanneling = true;
         IsMissileCooldown = true;
         _animator.SetTrigger("MissileAttack");
+
+        var interval = new WaitForSeconds(missileInterval);
         for (int i = 0; i < missileCount; ++i)
         {
             if (ObjectPool.instance.TryGet(missilePrefab, out var missileObject))
             {
                 var missile = missileObject.GetComponent<Missile>();
-                missile.SetTarget(MissileOffset.position, target.transform.position);
+                missile.SetTarget(missileOffset.position, target.transform.position);
             }
 
-            yield return new WaitForSeconds(missileInterval);
+            yield return interval;
         }
         isChanneling = false;
         DoTransition(BossTransition.AttackFinished);
@@ -102,10 +113,50 @@ public class BossBehaviour : MonoBehaviour
         isChanneling = true;
         _animator.SetTrigger("DoublePunch");
         var animationTime = _animator.GetCurrentAnimatorStateInfo(0).length;
-        Debug.Log(animationTime);
         yield return new WaitForSeconds(animationTime);
         isChanneling = false;
         DoTransition(BossTransition.AttackFinished);
+    }
+
+    public void Barrage()
+    {
+        StartCoroutine(CoBarrage());
+    }
+
+    private IEnumerator CoBarrage()
+    {
+        isChanneling = true;
+        IsBarrageCooldown = true;
+        _animator.SetTrigger("BarrageStart");
+
+        var interval = new WaitForSeconds(barrageInterval);
+        var elapsed = 0.0f;
+        while (elapsed < barrageTime)
+        {
+            var pool = ObjectPool.instance;
+            for (int i = 0; i < barrageAngles.Length; ++i)
+            {
+                if (pool.TryGet(barragePrefab, out var bulletObject))
+                {
+                    var bullet = bulletObject.GetComponent<Bullet>();
+                    bullet.transform.position = barrageOffset.position;
+                    bullet.SetDirection(barrageAngles[i]);
+                }
+            }
+
+            yield return interval;
+            elapsed += barrageInterval;
+        }
+
+        _animator.SetTrigger("BarrageEnd");
+        var animationTime = _animator.GetCurrentAnimatorStateInfo(0).length;
+        yield return new WaitForSeconds(animationTime);
+
+        isChanneling = false;
+        DoTransition(BossTransition.AttackFinished);
+
+        yield return new WaitForSeconds(barrageCooldown);
+        IsBarrageCooldown = false;
     }
 }
 
@@ -128,6 +179,7 @@ public class FollowPlayer : FSMState<BossTransition>
         var controller = actor.GetComponent<BossBehaviour>();
 
         if (!controller.IsMissileCooldown ||
+            !controller.IsBarrageCooldown ||
             Vector2.Distance(actorPosition, targetPosition) <= controller.distanceThreshold)
         {
             controller.DoTransition(BossTransition.AimPlayer);
@@ -174,7 +226,11 @@ public class AttackPlayer : FSMState<BossTransition>
         {
             controller.DoublePunch();
         }
-        else
+        else if (!controller.IsBarrageCooldown)
+        {
+            controller.Barrage();
+        }
+        else if (!controller.IsMissileCooldown)
         {
             controller.MissileAttack();
         }

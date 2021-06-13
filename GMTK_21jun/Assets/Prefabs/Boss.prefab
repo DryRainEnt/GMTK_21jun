@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2873790749425574010
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9110338499065789455}
+  m_Layer: 0
+  m_Name: BarrageOffset
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9110338499065789455
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2873790749425574010}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.3, y: -0.07, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7789459628750542154}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7789459628450750082
 GameObject:
   m_ObjectHideFlags: 0
@@ -56,10 +86,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7789459628750542155}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.302, y: 0, z: 0}
+  m_LocalPosition: {x: 0.3, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7789459628450750085}
+  - {fileID: 9110338499065789455}
   m_Father: {fileID: 7789459628820139602}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -182,14 +213,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   missilePrefab: {fileID: 427703219179875662, guid: 103c351e02bfd7f41836b1e35490820e,
     type: 3}
+  barragePrefab: {fileID: 1630092235537382727, guid: 37bfbe380ad51b640bb5de04edd8280c,
+    type: 3}
   target: {fileID: 0}
-  movementSpeed: 0
+  movementSpeed: 2
   distanceThreshold: 3
   isChanneling: 0
   missileCount: 8
   missileInterval: 0.08
   missileCooldown: 4
-  MissileOffset: {fileID: 7789459628450750085}
+  missileOffset: {fileID: 7789459628450750085}
+  barrageTime: 5
+  barrageInterval: 0.4
+  barrageCooldown: 1
+  barrageAngles:
+  - 45
+  - -45
+  - 135
+  - -135
+  barrageOffset: {fileID: 9110338499065789455}
 --- !u!95 &7789459628820139605
 Animator:
   serializedVersion: 3
