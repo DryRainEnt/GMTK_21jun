@@ -189,6 +189,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timeRecorder: {fileID: 0}
   clearPanel: {fileID: 0}
+  playerBehaviour: {fileID: 0}
 --- !u!1 &1852902763924007867
 GameObject:
   m_ObjectHideFlags: 0
@@ -378,7 +379,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -240, y: -367}
-  m_SizeDelta: {x: 320, y: 320}
+  m_SizeDelta: {x: 224, y: 224}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1852902764039298885
 CanvasRenderer:
@@ -570,7 +571,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 240, y: -367}
-  m_SizeDelta: {x: 204.8, y: 204.8}
+  m_SizeDelta: {x: 204, y: 204}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1852902765341514015
 CanvasRenderer:
