@@ -12,7 +12,11 @@ public class PlayerBehaviour : MonoBehaviour, IMovable, ICrasher, ICollector
     public GameObject VirtualColletorPrefab;
     public VirtualCollectorBehaviour VirtualCollectorCache = null;
 
+    private Animator _anim;
+    private SpriteRenderer _sr;
 
+    public bool isFlip => _sr && _sr.flipX;
+    
     public CollectType Type => CollectType.Player;
 
     [SerializeField] private bool isDashing = false;
@@ -27,6 +31,8 @@ public class PlayerBehaviour : MonoBehaviour, IMovable, ICrasher, ICollector
 
     private void Awake()
     {
+        _anim = GetComponentInChildren<Animator>();
+        _sr = GetComponentInChildren<SpriteRenderer>();
         Swarm = new List<ICollectable>();
     }
 
@@ -42,6 +48,11 @@ public class PlayerBehaviour : MonoBehaviour, IMovable, ICrasher, ICollector
         if (!isDashing)
             _veclocity = Vector3.right * Input.GetAxis("Horizontal")
                      + Vector3.up * Input.GetAxis("Vertical");
+        
+        _anim.SetBool("OnMove", _veclocity.magnitude > Mathf.Epsilon);
+
+        if (mainCam)
+            _sr.flipX = (mainCam.ScreenToWorldPoint(Input.mousePosition).x < Position.x);
 
         if (reposTimer < repositionDelay && reposTimer >= 0)
             reposTimer += dt;
@@ -76,6 +87,7 @@ public class PlayerBehaviour : MonoBehaviour, IMovable, ICrasher, ICollector
 
         if (Input.GetMouseButtonDown(0))
         {
+            _anim.Play("PlayerHold");
             isCharging = true;
 
             GameObject vcc;
@@ -94,6 +106,7 @@ public class PlayerBehaviour : MonoBehaviour, IMovable, ICrasher, ICollector
 
         if (Input.GetMouseButtonDown(1))
         {
+            _anim.Play("PlayerIdle");
             ChargeCancel();
         }
         if (isCharging && Input.GetMouseButton(0))
@@ -114,6 +127,7 @@ public class PlayerBehaviour : MonoBehaviour, IMovable, ICrasher, ICollector
         }
         if (isCharging && Input.GetMouseButtonUp(0))
         {
+            _anim.Play("PlayerAttack");
             VirtualCollectorCache.Blast(VirtualCollectorCache.Position + (VirtualCollectorCache.Position - Position));
             VirtualCollectorCache = null;
             throwStack = 1;
@@ -131,6 +145,9 @@ public class PlayerBehaviour : MonoBehaviour, IMovable, ICrasher, ICollector
         }
 
         throwStack = 1;
+        
+        VirtualCollectorCache.gameObject.SetActive(false);
+        VirtualCollectorCache = null;
     }
 
     // Update is called once per frame
@@ -211,7 +228,7 @@ public class PlayerBehaviour : MonoBehaviour, IMovable, ICrasher, ICollector
 
     public void OnSwarmDead(ICollectable target)
     {
-        Throw(target, GlobalUtils.RandomWholeRange(2f));
+        Throw(target, target.Movable.Position + GlobalUtils.RandomWholeRange(2f));
         reposTimer = 0f;
     }
 

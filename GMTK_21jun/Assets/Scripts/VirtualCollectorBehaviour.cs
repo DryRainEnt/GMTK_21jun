@@ -14,6 +14,7 @@ public class VirtualCollectorBehaviour : MonoBehaviour, IMovable, ICrasher, ICol
     private float innerTimer = 0f;
     private CircleCollider2D col;
 
+    public bool isFlip => false;
     public CollectType Type => CollectType.Virtual;
     
     private void Awake()

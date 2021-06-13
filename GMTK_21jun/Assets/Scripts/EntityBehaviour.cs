@@ -8,6 +8,7 @@ using UnityEngine.Events;
 public class EntityBehaviour : MonoBehaviour, IMovable, ICrasher, ICollectable
 {
     private Animator _anim;
+    private SpriteRenderer _sr;
     private FreeFallManager _freeFall;
     public bool isFly = false;
     public bool isShoot = false;
@@ -20,9 +21,12 @@ public class EntityBehaviour : MonoBehaviour, IMovable, ICrasher, ICollectable
     public Transform GfxTransform => transform.Find("GFX");
 
     private UnityEvent onCollected = new UnityEvent();
+
+    public IMovable Movable => this;
     
     private void Awake()
     {
+        _sr = GetComponentInChildren<SpriteRenderer>();
         _anim = GetComponentInChildren<Animator>();
     }
 
@@ -37,8 +41,14 @@ public class EntityBehaviour : MonoBehaviour, IMovable, ICrasher, ICollectable
         if (!isFly)
         {
             if (_collector != null)
+            {
                 _veclocity = _collector.Transform.position +
                     Index.GetSwarmOffset(_collector.Type, distMult) - Position;
+                if (_collector.Type == CollectType.Player)
+                {
+                    _sr.flipX = _collector.isFlip;
+                }
+            }
             else
                 _veclocity = Vector3.zero;
         }
@@ -71,7 +81,7 @@ public class EntityBehaviour : MonoBehaviour, IMovable, ICrasher, ICollectable
         destination = targetPos;
         _veclocity = destination - Position;
         _collector = null;
-        _anim.Play("EntityFly");
+        // _anim.Play("EntityFly");
         _freeFall = new FreeFallManager(3, 9.8f, 1, 0);
         isFly = true;
     }
@@ -79,12 +89,12 @@ public class EntityBehaviour : MonoBehaviour, IMovable, ICrasher, ICollectable
     public void OnAir()
     {
         isShoot = true;
-        _anim.Play("EntityFly");
+        // _anim.Play("EntityFly");
     }
 
     public void Collected(ICollector target)
     {
-        _anim.Play("EntityIdle");
+        _anim.Play("DroneIdle");
         _collector = target;
         isFly = false;
         distMult = 1f;
@@ -92,14 +102,14 @@ public class EntityBehaviour : MonoBehaviour, IMovable, ICrasher, ICollectable
 
     public void GetReady()
     {
-        _anim.Play("EntityReady");
+        _anim.Play("DroneReady");
         
         isFly = false;
     }
 
     public void ResetState()
     {
-        _anim.Play("EntityIdle");
+        _anim.Play("DroneIdle");
         isFly = false;
         isShoot = false;
     }
@@ -133,7 +143,7 @@ public class EntityBehaviour : MonoBehaviour, IMovable, ICrasher, ICollectable
             if (h < 0)
             {
                 _index = -1;
-                _anim.Play("EntityDown");
+                _anim.Play("DroneDown");
                 GfxTransform.localPosition = Vector3.zero;
                 isFly = false;
                 _freeFall = null;
