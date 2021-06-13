@@ -455,6 +455,9 @@ MonoBehaviour:
   - gameObject: {fileID: 5429091964264184778, guid: e88f638800fbd04419e3cd81365a6733,
       type: 3}
     count: 8
+  - gameObject: {fileID: 9200350001976883169, guid: cd1f4127c1d0de34f836e4257108aa19,
+      type: 3}
+    count: 8
   poolObjectParent: {fileID: 185169802}
 --- !u!4 &185169802
 Transform:
@@ -464,7 +467,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 185169800}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.0461743, y: -2.5470798, z: -341.70105}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

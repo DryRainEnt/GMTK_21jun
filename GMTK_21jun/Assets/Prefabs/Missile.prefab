@@ -133,8 +133,9 @@ MonoBehaviour:
   groupingRadius: 1.5
   warningClip: {fileID: 8300000, guid: 0fcce7a77c2f3b24ba487d2d789aaaff, type: 3}
   explosionClip: {fileID: 8300000, guid: 24061416f8e9d7546bcdc51461cdafb1, type: 3}
-  explosionPrefab: {fileID: 3357360331221591919, guid: c8297b23fbd599845835d437078c7220,
+  explosionPrefab: {fileID: 9200350001976883169, guid: cd1f4127c1d0de34f836e4257108aa19,
     type: 3}
+  FXPrefab: {fileID: 0}
 --- !u!1 &3446335985604347155
 GameObject:
   m_ObjectHideFlags: 0
