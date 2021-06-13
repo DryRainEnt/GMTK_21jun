@@ -39,8 +39,10 @@ public class BossBehaviour : MonoBehaviour, ICrasher
 
     private FSMController<BossTransition> _fsmController = null;
     private Animator _animator = null;
-    
-    public int HP = 1000;
+
+    public GameEndPanel GamePanel;
+    [SerializeField] private int HPMax = 50;
+    public int HP = 50;
     public Image BossHPGauge;
 
     public bool IsMissileCooldown { get; private set; } = false;
@@ -180,7 +182,10 @@ public class BossBehaviour : MonoBehaviour, ICrasher
         HP -= damage;
         //TODO: 보스 피격 이펙트
         if (BossHPGauge)
-            BossHPGauge.fillAmount = HP / 1000f;
+            BossHPGauge.fillAmount = HP / (float)HPMax;
+        
+        if (HP <= 0)
+            GamePanel.GameOvered();
 
         return true;
     }

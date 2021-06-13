@@ -200,6 +200,11 @@ PrefabInstance:
       objectReference: {fileID: 1974990714}
     - target: {fileID: 7789459628820139603, guid: 8b27b043e755da249b1b140bd47a77b0,
         type: 3}
+      propertyPath: GamePanel
+      value: 
+      objectReference: {fileID: 733889308}
+    - target: {fileID: 7789459628820139603, guid: 8b27b043e755da249b1b140bd47a77b0,
+        type: 3}
       propertyPath: BossHPGauge
       value: 
       objectReference: {fileID: 1798789090}
@@ -1157,6 +1162,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e435d693629a444eae680b6a8a7d8fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &733889308 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1852902763898481230, guid: e7956872f18e6c14a9607da553e9cc8e,
+    type: 3}
+  m_PrefabInstance: {fileID: 733889303}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 733889306}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d0140bd155797b428d2575875f9a481, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &741156741
 GameObject:
   m_ObjectHideFlags: 0
@@ -1276,6 +1293,7 @@ GameObject:
   - component: {fileID: 979164035}
   - component: {fileID: 979164037}
   - component: {fileID: 979164036}
+  - component: {fileID: 979164038}
   m_Layer: 5
   m_Name: CellCountText
   m_TagString: Untagged
@@ -1343,6 +1361,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 979164034}
   m_CullTransparentMesh: 0
+--- !u!114 &979164038
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 979164034}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8225e92c7313b14e82564b0a3fd5d7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerBehaviour: {fileID: 1550091355}
 --- !u!1 &1190731578
 GameObject:
   m_ObjectHideFlags: 0
@@ -2473,6 +2504,11 @@ PrefabInstance:
       propertyPath: mainCam
       value: 
       objectReference: {fileID: 1290012685}
+    - target: {fileID: 3730483256608857450, guid: 208655a30fbdce14a8ca4a5b06644425,
+        type: 3}
+      propertyPath: GamePanel
+      value: 
+      objectReference: {fileID: 733889308}
     - target: {fileID: 3730483256608857450, guid: 208655a30fbdce14a8ca4a5b06644425,
         type: 3}
       propertyPath: VirtualColletorPrefab

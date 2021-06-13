@@ -12,6 +12,7 @@ public class PlayerBehaviour : MonoBehaviour, IMovable, ICrasher, ICollector
     public GameObject VirtualColletorPrefab;
     public VirtualCollectorBehaviour VirtualCollectorCache = null;
 
+    public GameEndPanel GamePanel;
     private Animator _anim;
     private SpriteRenderer _sr;
 
@@ -200,12 +201,16 @@ public class PlayerBehaviour : MonoBehaviour, IMovable, ICrasher, ICollector
 
     public bool GetHit(int damage)
     {
+        if (HP <= 0)
+            return false;
+        
         HP -= damage;
         
         //TODO: 피격시 사망 연출
         _anim.Play("PlayerDamaged");
+        GamePanel.GameOvered();
         
-        return false;
+        return true;
     }
 
     #region IMovable
