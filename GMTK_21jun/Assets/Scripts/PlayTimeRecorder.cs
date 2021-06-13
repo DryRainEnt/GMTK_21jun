@@ -12,6 +12,9 @@ public class PlayTimeRecorder : MonoBehaviour
     float startTime;
 
     float stoppedTime;
+
+    bool isStopped = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -27,11 +30,13 @@ public class PlayTimeRecorder : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        UpdateText();
+        if (isStopped)
+            UpdateText();
     }
 
     public float StopTime()
     {
+        isStopped = true;
         stoppedTime = Time.time - startTime;
         return stoppedTime;
     }
