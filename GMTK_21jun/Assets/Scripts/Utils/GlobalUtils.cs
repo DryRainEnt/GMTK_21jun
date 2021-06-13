@@ -22,7 +22,7 @@ public static class GlobalUtils
             case CollectType.Player:
                 int level = 1;
                 int temp = 6;
-                while (level < 10)
+                while (level < 100)
                 {
                     if (index <= temp)
                     {
@@ -31,7 +31,7 @@ public static class GlobalUtils
                     }
 
                     level += 1;
-                    temp += temp * 2;
+                    temp = Mathf.RoundToInt(Mathf.Pow(2, level) - 1) * 6;
                 }
 
                 int round = Mathf.RoundToInt(Mathf.Pow(2, level - 1)) * 6;
@@ -46,7 +46,7 @@ public static class GlobalUtils
                     stock += (2f * Mathf.PI) / (3f + i * 0.5f);
                 }
 
-                return new Vector3(Mathf.Cos(stock), Mathf.Sin(stock) * 0.7f) * (0.2f + index * 0.05f);
+                return new Vector3(Mathf.Cos(stock), Mathf.Sin(stock) * 0.7f) * ((index + 10) * 0.03f);
         }
     }
 
@@ -54,11 +54,11 @@ public static class GlobalUtils
     {
         int level = 1;
         int temp = 6;
-        while (level < 10)
+        while (level < 100)
         {
             if (count <= temp) break;
             level += 1;
-            temp += temp * 2;
+            temp = Mathf.RoundToInt(Mathf.Pow(2, level) - 1) * 6;
         }
 
         return level;
