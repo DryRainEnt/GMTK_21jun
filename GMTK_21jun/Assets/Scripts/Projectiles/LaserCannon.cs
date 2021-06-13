@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using System.Linq;
 
 public class LaserCannon : MonoBehaviour
 {
@@ -10,14 +11,14 @@ public class LaserCannon : MonoBehaviour
     public float shortLaserCooldown;
     public float shortLaserDelay;
     public float shortLaserDuration;
-    public float shortlaserWidth = 30f;
+    public float shortlaserWidth;
 
     public float longLaserCooldown;
     public float longLaserDelay;
     public float longLaserDuration;
-    public float longLaserWidth = 80f;
+    public float longLaserWidth;
 
-    public float laserLength = 5000f;
+    public float laserLength = 100;
 
     public Transform target;
 
@@ -41,26 +42,31 @@ public class LaserCannon : MonoBehaviour
                 continue;
             }
 
-            var direction = SetLaserTransform(laserObject, laserLength);
             var renderer = laserObject.GetComponent<SpriteRenderer>();
             var ppu = renderer.sprite.pixelsPerUnit;
+            var spriteBorder = renderer.sprite.border;
+            var width = renderer.sprite.rect.width - (spriteBorder.x + spriteBorder.z);
+            var direction = SetLaserTransform(laserObject, laserLength, ppu);
+            renderer.size = new Vector2(1f, laserLength);
 
             renderer.color = Color.white;
-            laserObject.transform.localScale = new Vector3(laserLength, 0f, 0f);
-            laserObject.transform.DOScaleY(shortlaserWidth, shortLaserDelay);
+
+            laserObject.transform.localScale = new Vector3(0f, 1f, 0f);
+            laserObject.transform.DOScaleX(shortlaserWidth, shortLaserDelay);
             yield return new WaitForSeconds(shortLaserDelay);
 
-            var interruptedCount = GetInterruptedLaserCount(
+            var size = new Vector2(laserLength, shortlaserWidth * (width / ppu));
+            var isInterrupted = CheckLaserInterrupted(
                 laserObject.transform.position,
-                laserObject.transform.localScale,
-                direction,
-                ppu);
-            if (interruptedCount > 0)
+                size,
+                direction);
+            if (isInterrupted)
             {
+                Debug.Log("interrupt");
                 var length = Vector2.Distance(target.position, transform.position);
                 laserObject.transform.position = transform.position + (direction * length * 0.5f);
-                // Multiply PPU
-                laserObject.transform.localScale = new Vector3(length * ppu, shortlaserWidth, 1f);
+                laserObject.transform.localScale = new Vector3(shortlaserWidth, 1f, 1f);
+                renderer.size = new Vector2(1f, length);
             }
             renderer.color = Color.red;
             renderer.DOFade(0f, shortLaserDuration);
@@ -81,26 +87,30 @@ public class LaserCannon : MonoBehaviour
                 continue;
             }
 
-            var direction = SetLaserTransform(laserObject, laserLength);
+
             var renderer = laserObject.GetComponent<SpriteRenderer>();
             var ppu = renderer.sprite.pixelsPerUnit;
+            var spriteBorder = renderer.sprite.border;
+            var width = renderer.sprite.rect.width - (spriteBorder.x + spriteBorder.z);
+            var direction = SetLaserTransform(laserObject, laserLength, ppu);
+            renderer.size = new Vector2(1f, laserLength);
 
             renderer.color = Color.white;
-            laserObject.transform.localScale = new Vector3(laserLength, 0f, 0f);
-            laserObject.transform.DOScaleY(longLaserWidth, longLaserDelay);
+            laserObject.transform.localScale = new Vector3(0f, 1f, 0f);
+            laserObject.transform.DOScaleX(longLaserWidth, longLaserDelay);
             yield return new WaitForSeconds(longLaserDelay);
 
-            var interruptedCount = GetInterruptedLaserCount(
+            var size = new Vector2(laserLength, longLaserWidth * (width / ppu));
+            var isInterrupted = CheckLaserInterrupted(
                 laserObject.transform.position,
-                laserObject.transform.localScale,
-                direction,
-                ppu);
-            if (interruptedCount > 0)
+                size,
+                direction);
+            if (isInterrupted)
             {
                 var length = Vector2.Distance(target.position, transform.position);
                 laserObject.transform.position = transform.position + (direction * length * 0.5f);
-                // Multiply PPU
-                laserObject.transform.localScale = new Vector3(length * ppu, longLaserWidth, 1f);
+                laserObject.transform.localScale = new Vector3(longLaserWidth, 1f, 1f);
+                renderer.size = new Vector2(1f, length);
             }
             renderer.color = Color.red;
             renderer.DOFade(0f, longLaserDuration);
@@ -109,21 +119,22 @@ public class LaserCannon : MonoBehaviour
         }
     }
 
-    private int GetInterruptedLaserCount(Vector2 pos, Vector2 size, Vector2 direction, float pixelPerUnit)
+    private bool CheckLaserInterrupted(Vector2 pos, Vector2 size, Vector2 direction)
     {
         var angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         if (angle < 0) angle += 360f;
 
-        size = new Vector3(size.x / pixelPerUnit, size.y / pixelPerUnit, 1f);
-        return Physics2D.OverlapBoxAll(pos, size, angle).Length;
+        size = new Vector3(size.x, size.y, 1f);
+        return Physics2D.OverlapBoxAll(pos, size, angle)
+            .Where(x => x.CompareTag("BlockLaser"))
+            .Any();
     }
 
-    private Vector3 SetLaserTransform(GameObject laserObject, float laserLength)
+    private Vector3 SetLaserTransform(GameObject laserObject, float laserLength, float ppu)
     {
         var direction = (target.position - transform.position).normalized;
-        // 레이저 길이 절반 * (1 / 100) * (100 / 32) <- PPU
-        laserObject.transform.position = transform.position + (direction * laserLength * 0.5f * 0.03125f);
-        laserObject.transform.right = direction;
+        laserObject.transform.position = transform.position + (direction * laserLength * 0.5f);
+        laserObject.transform.up = -direction;
         return direction;
     }
 }
