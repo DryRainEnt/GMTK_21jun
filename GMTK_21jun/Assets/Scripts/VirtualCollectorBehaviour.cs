@@ -61,7 +61,7 @@ public class VirtualCollectorBehaviour : MonoBehaviour, IMovable, ICrasher, ICol
         target.Index = Swarm.Count;
         target.Collected(this);
         target.GetReady();
-        col.radius = (0.2f + Swarm.Count * 0.05f);
+        col.radius = (0.2f + (Swarm.Count + 10) * 0.03f);
     }
     
     public void Throw(ICollectable target, Vector3 pos)
