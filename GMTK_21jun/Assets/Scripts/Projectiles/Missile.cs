@@ -38,7 +38,8 @@ public class Missile : MonoBehaviour
         var hits = Physics2D.OverlapCircleAll(pos, 0.5f);
         foreach (var hit in hits)
         {
-            hit.GetComponent<ICrasher>()?.GetHit(3);
+            if (hit.gameObject.layer != LayerMask.NameToLayer("Enemy"))
+                hit.GetComponent<ICrasher>()?.GetHit(3);
         }
         gameObject.SetActive(false);
     }

@@ -187,7 +187,7 @@ public class BossBehaviour : MonoBehaviour, ICrasher
             BossHPGauge.fillAmount = HP / (float)HPMax;
         
         if (HP <= 0)
-            GamePanel.GameOvered();
+            GamePanel.GameCleared();
 
         return true;
     }
